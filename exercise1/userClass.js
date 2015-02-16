@@ -1,10 +1,12 @@
-function User(){
-
+//constructor pattern
+function User(name, age) {
+  this.name = name;
+  this.age = age;
 }
 
+//prototype pattern
 User.prototype = {
-  name: 'tobi',
-  age: '29',
+  constructor: User,
 
   compare: function(other_user) {
     user_age = Number(this.age);
@@ -17,8 +19,8 @@ User.prototype = {
       return '' + other_user.name + ' is older than ' + this.name;
     }
   }
-
 };
+
 
 
 //creating user instances
