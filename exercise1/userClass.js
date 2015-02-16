@@ -2,21 +2,23 @@ function User(){
 
 }
 
-User.prototype.name = "Tobi";
-User.prototype.age = "29";
+User.prototype = {
+  name: 'tobi',
+  age: '29',
 
+  compare: function(other_user) {
+    user_age = Number(this.age);
+    other_age = Number(other_user.age);
 
-User.prototype.compare = function(other_user) {
-  user_age = Number(this.age);
-  other_age = Number(other_user.age);
-
-  if(user_age > other_age) {
-    return '' + this.name + ' is older than ' + other_user.name;
-  } 
-  else if(other_age > user_age) {
-    return '' + other_user.name + ' is older than ' + this.name;
+    if(user_age > other_age) {
+      return '' + this.name + ' is older than ' + other_user.name;
+    } 
+    else if(other_age > user_age) {
+      return '' + other_user.name + ' is older than ' + this.name;
+    }
   }
-}
+
+};
 
 
 //creating user instances
