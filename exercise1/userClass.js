@@ -1,8 +1,3 @@
-function User(name_param, age_param) {
-  this.name = name_param;
-  this.age = age_param;
-}
-
 function User(){
 
 }
@@ -23,6 +18,8 @@ User.prototype.compare = function(other_user) {
   }
 }
 
+
+//creating user instances
 var user1 = new User();
 user1.name =  "Joshua", 
 user1.age = "26";
@@ -32,6 +29,6 @@ var user2 = new User();
 user2.name = "Eunice";
 user2.age = "14";
 
-
+//perform comparison
 console.log(user1.compare(user2));
 console.log(user2.compare(user1));
