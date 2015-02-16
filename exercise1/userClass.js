@@ -1,10 +1,8 @@
-//constructor pattern
 function User(name, age) {
   this.name = name;
   this.age = age;
 }
 
-//prototype pattern
 User.prototype = {
   constructor: User,
 
