@@ -27,7 +27,7 @@ var user1 = new User();
 user1.name =  "Joshua", 
 user1.age = "26";
 
-//perform comparison
+
 var user2 = new User();
 user2.name = "Eunice";
 user2.age = "14";
