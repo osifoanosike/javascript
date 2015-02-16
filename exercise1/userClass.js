@@ -3,6 +3,14 @@ function User(name_param, age_param) {
   this.age = age_param;
 }
 
+function User(){
+
+}
+
+User.prototype.name = "Tobi";
+User.prototype.age = "29";
+
+
 User.prototype.compare = function(other_user) {
   user_age = Number(this.age);
   other_age = Number(other_user.age);
@@ -15,5 +23,15 @@ User.prototype.compare = function(other_user) {
   }
 }
 
-var user1 = new User("Joshua", "13");
-var user2 = new User("Helen", "17");
+var user1 = new User();
+user1.name =  "Joshua", 
+user1.age = "26";
+
+//perform comparison
+var user2 = new User();
+user2.name = "Eunice";
+user2.age = "14";
+
+
+console.log(user1.compare(user2));
+console.log(user2.compare(user1));
