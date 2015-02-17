@@ -19,12 +19,12 @@ document.addEventListener("DOMContentLoaded", function(e){
         checkboxes[i].checked = true;
       }
     }
-  };
+  }
 
   function unselectAllItems() {
     for(var i = 0; i < checkboxes.length; i++) {
       checkboxes[i].checked = false;
     }
-  };
+  }
 });
 
