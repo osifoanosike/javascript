@@ -1,15 +1,17 @@
 //this ensures the DOM has loaded before trigegering any events
-document.addEventListener("DOMContentLoaded", function(e){
+document.addEventListener("DOMContentLoaded", function(){
 
   var select_all = document.getElementById("select_all");
   var select_none = document.getElementById("select_none");
-  var checkboxes = document.getElementsByClassName("chkbox")
+  var checkboxes = document.querySelectorAll('input[type=checkbox]');
 
-  select_all.onclick = function() {
+  select_all.onclick = function(e) {
+    e.preventDefault();
     selectAllItems();
   };
 
-  select_none.onclick = function() {
+  select_none.onclick = function(e) {
+    e.preventDefault();
     unselectAllItems();
   };
 
