@@ -1,0 +1,19 @@
+a {
+	font-weight: light;
+	border-radius: 5px;
+	text-decoration: none;
+	padding: 4px 6px;
+	font-size: small;
+}
+
+a#select_all {
+	border: 1px solid #ffa600;
+}
+
+a#select_none {
+	border: 1px solid blue;
+}
+
+section {
+	margin: 8px;
+}
