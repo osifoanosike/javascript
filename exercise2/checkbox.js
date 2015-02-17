@@ -6,11 +6,11 @@ document.addEventListener("DOMContentLoaded", function(e){
   var checkboxes = document.getElementsByClassName("chkbox")
 
   select_all.onclick = function() {
-    selectAll();
+    selectAllItems();
   };
 
   select_none.onclick = function() {
-    unselectAll();
+    unselectAllItems();
   };
 
   function selectAllItems(){
