@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
-  noneAction.addEventListener("click", function() {
+  noneAction.addEventListener('click', function() {
     for( i = 0; i < checkBoxes.length; i++ ) {
       checkBoxes[i].checked = false;  
     }
