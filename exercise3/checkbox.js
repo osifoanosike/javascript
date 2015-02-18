@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if(selectedDays.length < 3 && this.checked == true){
           
           selectedDays.push(this.id.toString());
+
+          //deselects the none chkbox
+          noneAction.checked = false
         
         } else if (selectedDays.length >= 3 && this.checked == true) {
           
@@ -29,11 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-
   noneAction.addEventListener('click', function() {
     for( i = 0; i < checkBoxes.length; i++ ) {
       checkBoxes[i].checked = false;  
     }
+    
+    this.checked = true;
     selectedDays = [];
   });
 });
