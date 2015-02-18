@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							break;
 					}
 				}
+				active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
 				
 			} else {
 				//handle logic for unchecking and hiding sublist
@@ -96,7 +97,7 @@ function hideChildList(active_item){
 
 function showChildList(active_item){
 	var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-	child_list.attributes.removeNamedItem('hidden').value;//makes the list visible;
+	child_list.removeAttribute('hidden');//makes the list visible;
 }
 
 function hasChild(active_item){
