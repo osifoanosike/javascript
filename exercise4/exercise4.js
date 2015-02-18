@@ -35,8 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
 				
 			} else {
-				//handle logic for unchecking and hiding sublist
-
 				hideChildList(active_list);
 			}				
 		}
