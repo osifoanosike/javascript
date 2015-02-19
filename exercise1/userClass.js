@@ -22,14 +22,9 @@ User.prototype = {
 
 
 //creating user instances
-var user1 = new User();
-user1.name =  "Joshua", 
-user1.age = "26";
+var user1 = new User("Joshua", "26");
 
-
-var user2 = new User();
-user2.name = "Eunice";
-user2.age = "14";
+var user2 = new User("Eunice","14");
 
 //perform comparison
 console.log(user1.compare(user2));
