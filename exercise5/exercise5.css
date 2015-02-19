@@ -1,8 +1,8 @@
 
 
 #container {
-	position: relative;
-	border:1px solid #ccc;
+  position: relative;
+  border:1px solid #ccc;
 }
 
 button#new_row_btn {

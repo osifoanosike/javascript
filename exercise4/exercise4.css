@@ -1,11 +1,11 @@
 body {
-	padding: 0;
+  padding: 0;
 }
 div#wrapper {
-	height: 100px;
-	overflow: scroll;
+  height: 100px;
+  overflow: scroll;
 }
 
 div#wrapper ul {
-	list-style-type: none;
+  list-style-type: none;
 }
