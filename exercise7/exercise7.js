@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function(){
 	var names = []
 
 	for(i = 0; i < fields.length; i++){
-		var currentInput = prompt('Enter your ' + fields[i] , '--your' + fields[i] + ' here--');
+		var currentInput = prompt('Enter your ' + fields[i]);
 		
 		//converts input to its boolean value (nulll and empty string == false)
-		if (!currentInput){
+		if (!currentInput.trim()){
 			alert('The ' + fields[i] + ' entered is invalid');
 			names = [];
 		} else {
