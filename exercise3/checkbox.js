@@ -1,45 +1,73 @@
-document.addEventListener('DOMContentLoaded', function() {
+function CheckboxOp(checkBoxes, none_checkbox){
+  this.checkBoxes = checkBoxes;
+  this.noneAction = none_checkbox;
+  this.len = this.checkBoxes.length;
+  this.selectedDays = [];
+  that = this;
+}
 
-  var checkBoxes = document.body.querySelectorAll('input[type=checkbox]'), i;
-  var len = checkBoxes.length;
-  var selectedDays = [];
 
-  var noneAction = document.getElementById('none');
+CheckboxOp.prototype = {
+  constructor: CheckboxOp,
 
-  for( i = 0; i < len; i++ ) {
-    checkBoxes[i].addEventListener("click", function(){
-      if(this.id != 'none') {
-        if(selectedDays.length < 3 && this.checked == true){
+  selectCheckbox: function (){
+    currentCheckbox = this;
+
+    if(currentCheckbox.id != 'none') {
+      if(that.selectedDays.length < 3 && currentCheckbox.checked == true){
           
-          selectedDays.push(this.id.toString());
+        that.selectedDays.push(currentCheckbox.id.toString());
 
           //deselects the none chkbox
-          noneAction.checked = false
+        that.noneAction.checked = false
         
-        } else if (selectedDays.length >= 3 && this.checked == true) {
+      } else if (that.selectedDays.length >= 3 && currentCheckbox.checked == true) {
           
-          //if array is full and user still tries to add
-          this.checked = false;
-          alert('Only 3 days can be selected.' + 
-            '\nYou have already selected ' + selectedDays[0] + ', ' + selectedDays[1] + ' and ' + selectedDays[2]);
-        
-        } else if(this.checked == false){
+        //if array is full and user still tries to add
+        currentCheckbox.checked = false;
+        alert('Only 3 days can be selected.' + 
+          '\nYou have already selected ' + that.selectedDays[0] + ', ' + that.selectedDays[1] + ' and ' + that.selectedDays[2]);
+      
+      } else if(currentCheckbox.checked == false){
 
-          //if the user unchecks...even if array is full
-          selectedDays.splice(selectedDays.indexOf(this.id), 1);
-        }
-      }   
-    });
-  }
-
-  noneAction.addEventListener('click', function() {
-    for( i = 0; i < checkBoxes.length; i++ ) {
-      checkBoxes[i].checked = false;  
+        //if the user unchecks...even if array is full
+        that.selectedDays.splice(that.selectedDays.indexOf(currentCheckbox.id), 1);
+      }
     }
-    
+  },
+
+
+  unselectAll: function() {
+    for( i = 0; i < that.checkBoxes.length; i++ ) {
+      that.checkBoxes[i].checked = false;  
+    }
+
     this.checked = true;
-    selectedDays = [];
-  });
+    that.selectedDays = [];
+  },
+
+
+  addEventListeners: function() {
+    _this = this;
+    that.noneAction.addEventListener('click', _this.unselectAll);
+
+    for( i = 0; i < this.len; i++ ) {
+      // console.log(this.checkBoxes[i]);
+
+      that.checkBoxes[i].addEventListener('click', _this.selectCheckbox);
+    }
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+  var checkBoxes = document.body.querySelectorAll('input[type=checkbox]');
+  var noneAction = document.getElementById('none');
+
+  var chkboxOps = new CheckboxOp(checkBoxes, noneAction);
+  chkboxOps.addEventListeners();
+
 });
 
 

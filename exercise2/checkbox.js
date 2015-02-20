@@ -41,9 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var select_all = document.getElementById('select_all');
   var select_none = document.getElementById('select_none');
   var checkboxes = document.querySelectorAll('input[type=checkbox]');
-
-  // console.log(checkboxes);
-
   var chkbox = new Checkbox(checkboxes, select_all, select_none);
   chkbox.addEventListeners();
   
