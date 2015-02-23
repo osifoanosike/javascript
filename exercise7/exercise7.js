@@ -1,6 +1,3 @@
-
-
-
 function User() {
   this.firstname = "";
   this.lastname = "";
@@ -34,7 +31,6 @@ User.prototype = {
     }
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', function(){
   var user = new User();
