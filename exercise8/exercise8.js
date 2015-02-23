@@ -30,6 +30,5 @@ FrameLoader.prototype = {
 document.addEventListener('DOMContentLoaded', function(){
   var frameLoader = new FrameLoader();
   frameLoader.loadFrame();
-
 });
 
