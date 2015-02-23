@@ -11,6 +11,7 @@ CheckboxOp.prototype = {
   constructor: CheckboxOp,
 
   selectCheckbox: function (){
+
     currentCheckbox = this;
 
     if(currentCheckbox.id != 'none') {
@@ -34,6 +35,7 @@ CheckboxOp.prototype = {
         that.selectedDays.splice(that.selectedDays.indexOf(currentCheckbox.id), 1);
       }
     }
+    console.log(that.selectedDays.length);
   },
 
 
@@ -48,13 +50,13 @@ CheckboxOp.prototype = {
 
 
   addEventListeners: function() {
-    _this = this;
-    that.noneAction.addEventListener('click', _this.unselectAll);
+    // _this = this;
+    that.noneAction.addEventListener('click', that.unselectAll);
 
     for( i = 0; i < this.len; i++ ) {
       // console.log(this.checkBoxes[i]);
 
-      that.checkBoxes[i].addEventListener('click', _this.selectCheckbox);
+      that.checkBoxes[i].addEventListener('click', that.selectCheckbox);
     }
   }
 }

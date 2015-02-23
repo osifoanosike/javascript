@@ -12,25 +12,25 @@
     </header>
 
     <div>
-      <form>
+      <form id='regForm'>
         <div class="form-section">
           <label for="login_id">Login id</label>
-          <input type="text" id="login_id"/>
+          <input type="text" id="login_id" name="Login ID"/>
         </div>
 
         <div class="form-section">
           <label for="email">Email</label>
-          <input type="email" id="email"/>
+          <input type="email" id="email" name="Email"/>
         </div>
 
         <div class="form-section">
           <label for="name">Name</label>
-          <input type="text" id="name"/>
+          <input type="text" id="name" name="Name"/>
         </div>
 
         <div class="form-section">
           <label for="time_zone">Time Zone</label>
-          <select id="time_zone">
+          <select id="time_zone" name="Time zone">
             <option>GMT</option>
             <option>UTC</option>
             <option>PST</option>
@@ -39,17 +39,17 @@
 
         <div class="form-section">
           <label for="home_page">Home Page</label>
-          <input type="text" id="home_page"/>
+          <input type="text" id="home_page" name="Home page"/>
         </div>
 
         <div class="form-section">
           <label for="about_me">About me</label>
-          <textarea id="about_me" cols="5" rows="12"></textarea>
+          <textarea id="about_me" cols="5" rows="12" name="About me"></textarea>
         </div>
 
         <div class="form-section">
-          <input type="checkbox" id="recv_notif"/>
-          <label for="recv_notif">Recieve notification of comments.</label>
+          <input type="checkbox" id="notifCheck" name="Confirm notifications"/>
+          <label for="notifCheck">Recieve notification of comments.</label>
           <p id="notif_note">You would be sent a notification when someone post comments to your Blog or Album.</p>
         </div>
 

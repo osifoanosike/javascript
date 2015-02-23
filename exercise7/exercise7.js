@@ -1,22 +1,43 @@
 
-document.addEventListener('DOMContentLoaded', function(){
-  var fields = ['firstname', 'lastname'], i;
-  var names = []
 
-  for(i = 0; i < fields.length; i++){
-    var currentInput = prompt('Enter your ' + fields[i]);
-    
-    //converts input to its boolean value (nulll and empty string == false)
-    if (!currentInput.trim()){
-      alert('The ' + fields[i] + ' entered is invalid');
-      names = [];
+
+function User() {
+  this.firstname = "";
+  this.lastname = "";
+  that = this;
+}
+
+User.prototype = {
+  constructor: User,
+
+  create: function(fields) {
+
+    for(i = 0; i < fields.length; i++){
+      var input = prompt('Enter your ' + fields[i]);
+
+      if(that.inputIsValid(fields[i], input)){
+        this[fields[i]] = input;
+      }
+    }
+    //if both array was populated wits both names
+    if (that.firstname.trim() && that.lastname.trim()) {
+      alert('Hello ' + that.firstname +', ' + that.lastname );
+      document.body.innerHTML = 'Hello ' + that.firstname +', ' + that.lastname;
+    }
+  },
+
+  inputIsValid: function(field, input){
+    if (!input.trim()){
+      alert('The ' + field + ' entered is invalid');
     } else {
-      names.push(currentInput);
+      return true;
     }
   }
-  //if both array was populated wits both names
-  if (names.length == 2) {
-    alert('Hello ' + names.join(', ') );
-    document.body.innerHTML = 'Hello ' + names.join(', ');
-  }
+}
+
+
+document.addEventListener('DOMContentLoaded', function(){
+  var user = new User();
+  fields = ["firstname", "lastname"];
+  user.create(fields);
 });
