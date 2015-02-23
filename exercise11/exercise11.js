@@ -7,9 +7,8 @@ FormOperation.prototype = {
 	doSubmit: function() {
 		event.preventDefault();
 		var input = that.currform['number'].value;
-		var truePattern = /^\d+$/;
 
-		if(truePattern.test(input.trim())){
+		if(/^\d+$/.test(input.trim())){
 			that.currform['result'].value = "true";
 			that.currform.submit();
 		}
