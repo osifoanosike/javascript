@@ -52,14 +52,29 @@ CheckBoxOperation.prototype = {
     child_list.setAttribute('hidden', 'true');
   },
 
-  showChildList: function (active_item){
-    var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    that.reselectChldItems(child_list);
-    child_list.removeAttribute('hidden');//makes the list visible;
-  },
-
-  hasChild: function(active_item){ 
-    return (active_item.childElementCount > 1);
+  showChildList: function (active_item, parent_item){
+    //check if child elements already exist before creating new ones
+    if(active_item.childElementCount > 1){
+      var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+      that.reselectChldItems(child_list);
+      child_list.removeAttribute('hidden');//makes the list visible;
+    } else {
+      switch(parent_item.id) {
+          case 'color':
+            that.createChildList(parent_item.id, that.colorChildList);
+            break;
+          case 'drinks':
+            that.createChildList(parent_item.id, that.drinksChildList);
+            break;
+          case 'movies':
+            that.createChildList(parent_item.id, that.moviesChildList);
+            break;
+          case 'bikes':
+            that.createChildList(parent_item.id, that.bikesChildList);
+            break;
+        }
+    }
+    
   },
 
   reselectChldItems: function(childList) {
@@ -80,28 +95,7 @@ CheckBoxOperation.prototype = {
     var active_list = document.body.querySelector('li#' + this.id);
 
     if (this.checked == true){
-
-      //checks so i dont have to create a new sublist everytime
-      if(that.hasChild(active_list)){
-        that.showChildList(active_list);
-      }else {
-
-        //only create new sublist for elements that never had
-        switch(this.id) {
-          case 'color':
-            that.createChildList(this.id, that.colorChildList);
-            break;
-          case 'drinks':
-            that.createChildList(this.id, that.drinksChildList);
-            break;
-          case 'movies':
-            that.createChildList(this.id, that.moviesChildList);
-            break;
-          case 'bikes':
-            that.createChildList(this.id, that.bikesChildList);
-            break;
-        }
-      }
+      that.showChildList(active_list, this);
       active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
         
     } else {

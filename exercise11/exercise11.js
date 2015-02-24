@@ -22,10 +22,8 @@ FormOperation.prototype = {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', function(){
   var form = document.getElementById('myForm');
-
   var formOps = new FormOperation(form);
   formOps.addEventHandlers();
 });
