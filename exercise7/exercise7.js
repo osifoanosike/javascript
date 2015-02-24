@@ -5,8 +5,6 @@ function User() {
 }
 
 User.prototype = {
-  constructor: User,
-
   create: function(fields) {
 
     for(i = 0; i < fields.length; i++){
@@ -17,7 +15,7 @@ User.prototype = {
       }
     }
     //if both array was populated wits both names
-    if (that.firstname.trim() && that.lastname.trim()) {
+    if (that.firstname && that.lastname) {
       alert('Hello ' + that.firstname +', ' + that.lastname );
       document.body.innerHTML = 'Hello ' + that.firstname +', ' + that.lastname;
     }
