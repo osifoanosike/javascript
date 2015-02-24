@@ -4,8 +4,6 @@ function User(name, age) {
 }
 
 User.prototype = {
-  constructor: User,
-
   compare: function(other_user) {
     user_age = Number(this.age);
     other_age = Number(other_user.age);
@@ -18,8 +16,6 @@ User.prototype = {
     }
   }
 };
-
-
 
 //creating user instances
 var user1 = new User("Joshua", "26");

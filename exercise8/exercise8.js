@@ -1,11 +1,9 @@
 
-function FrameLoader(){
+function UrlLoader(){
   that = this;
 }
 
-FrameLoader.prototype = {
-  constructor: FrameLoader,
-  
+UrlLoader.prototype = {
   isValidUrl: function(url){
     if(!url) {
       alert('Invalid input entered.');
@@ -14,13 +12,14 @@ FrameLoader.prototype = {
     else{ return true; }
   },
 
-  loadFrame: function(url){
+  loadUrl: function(url){
     url = prompt("please enter a url");
     if(that.isValidUrl(url)){
       //trim url and open i new frame.
       if(url.indexOf('http://') == -1){
         url  = 'http://' + url;
       }
+
       window.open(encodeURI(url), "newframe",
        "height=450,width=400,menubar=no,toolbar=no,scrollbars=no,location=no,status=no,resizable=no");
     }
@@ -28,7 +27,7 @@ FrameLoader.prototype = {
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  var frameLoader = new FrameLoader();
-  frameLoader.loadFrame();
+  var urlLoader = new UrlLoader();
+  urlLoader.loadUrl();
 });
 

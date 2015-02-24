@@ -11,9 +11,6 @@ function Table(addRowButton){
 }
 
 Table.prototype = {
-
-  constructor: Table,
-
   createNameField: function(count) {
     var nameField = document.createElement('input');
     nameField.setAttribute('type', 'text');

@@ -6,7 +6,6 @@ function CheckboxHandler(checkboxes, checkbox_all, checkbox_none){
 }
 
 CheckboxHandler.prototype = {
-  constructor: CheckboxHandler,
   selectAllItems: function(){
     for(var i = 0; i < that.checkboxes.length; i++) {
       if (!that.checkboxes[i].checked) {

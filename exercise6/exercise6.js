@@ -5,8 +5,6 @@ function FormHandler(regForm, notifCheck){
 }
 
 FormHandler.prototype = {
-  constructor: FormHandler,
-  
   isFormValid: function(form_param){
     var i, returnVal;
     for(i = 0; i < form_param.elements.length; i++ ) {
