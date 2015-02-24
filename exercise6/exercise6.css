@@ -54,7 +54,7 @@ div.form-section label{
   width: 30%;
 }
 
-input#recv_notif + label {
+input#notifCheck + label {
   font-weight: bold;
   font-size: 1em;
   display: inline;
