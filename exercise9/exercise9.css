@@ -1,11 +1,25 @@
+body {
+	width: 85%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 section#selectbox_group {
 	position: relative;
 }
-#countries_A, #countries_B {
+#countries_A , #countries_B{
 	display: inline-block;
-	min-width: 45%;
+	width: 40%;
+	min-height: 120px;
+}
+
+#controls  {
+	width: 15%;
+	display: inline-block;
 }
 
 #controls button{
-	display: inline-block;
+	display: block;
+	width: 100%;
+	margin: 3px 0;
 }
