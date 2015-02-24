@@ -7,22 +7,22 @@ function CheckboxHandler(checkboxes, checkbox_all, checkbox_none){
 
 CheckboxHandler.prototype = {
   selectAllItems: function(){
-    for(var i = 0; i < that.checkboxes.length; i++) {
-      if (!that.checkboxes[i].checked) {
-        that.checkboxes[i].checked = true;
-      }
-    }
+    that.setCheckedState(true);
   },
 
   unselectAllItems: function() {
+    that.setCheckedState(false);
+  },
+
+  setCheckedState: function(state) {
     for(var i = 0; i < that.checkboxes.length; i++) {
-      that.checkboxes[i].checked = false;
+      that.checkboxes[i].checked = state;
     }
   },
 
   addEventHandlers: function() {
     var _this = this;
-    this.checkbox_all.addEventListener('click', _this.selectAllItems);
+    this.checkbox_all.addEventListener('click', _this.setCheckedState);
     this.checkbox_none.addEventListener('click', _this.unselectAllItems);
   }
 }
