@@ -1,0 +1,11 @@
+section#selectbox_group {
+	position: relative;
+}
+#countries_A, #countries_B {
+	display: inline-block;
+	min-width: 45%;
+}
+
+#controls button{
+	display: inline-block;
+}

@@ -15,34 +15,27 @@ CheckBoxOperation.prototype = {
 
     var fragment = document.createDocumentFragment();
     var ul = document.createElement('ul');
-    var active_list = document.body.querySelector('li#' + active_item);
-    var li_with_content = null;
-    
+    var active_list = document.body.querySelector('li#' + active_item);    
 
     for(var i = 0; i < item_array.length; i++) {
-      li_with_content = that.createInnerCheckbox(active_item, item_array[i])
-      fragment.appendChild(li_with_content);
+      fragment.appendChild(that.createInnerCheckbox(active_item, item_array[i]));
     }
     ul.appendChild(fragment); 
     active_list.appendChild(ul);
   },
 
   createInnerCheckbox: function (parent_item, current_item){
-    var inner_div = null;
-    var inner_chkbox = null;
-    var inner_label = null;
-    var li = null;
-
-    li = document.createElement("li");
-    inner_div = document.createElement('div');
+    var li = document.createElement("li");
+    var inner_div = document.createElement('div');
 
     //create checkbox
-    inner_chkbox = document.createElement('input');
+    var inner_chkbox = document.createElement('input');
     inner_chkbox.setAttribute('type', 'checkbox');
     inner_chkbox.setAttribute('id', parent_item + '_' + current_item);
+    inner_chkbox.setAttribute('checked','true');
 
     //create labels for checkbox
-    inner_label = document.createElement('label');
+    var inner_label = document.createElement('label');
     inner_label.setAttribute('for', parent_item + '_' + current_item);
     inner_label.appendChild(document.createTextNode(current_item))
 
@@ -55,21 +48,36 @@ CheckBoxOperation.prototype = {
 
   hideChildList: function (active_item){
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+    that.clearState(child_list);
     child_list.setAttribute('hidden', 'true');
   },
 
   showChildList: function (active_item){
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+    that.reselectChldItems(child_list);
     child_list.removeAttribute('hidden');//makes the list visible;
   },
 
-  hasChild: function(active_item){
-    
+  hasChild: function(active_item){ 
     return (active_item.childElementCount > 1);
   },
 
+  reselectChldItems: function(childList) {
+    var childItems = childList.querySelectorAll('input[type=checkbox]')
+    for(i=0; i < childItems.length; i++) {
+      childItems[i].checked = true;
+    }
+  },
+
+  clearState: function(childList) {
+    var childItems = childList.querySelectorAll('input[type=checkbox]')
+    for(i=0; i < childItems.length; i++) {
+      childItems[i].removeAttribute('checked');
+    }
+  },
+
   selectCheckBox: function() {
-    active_list = document.body.querySelector('li#' + this.id);
+    var active_list = document.body.querySelector('li#' + this.id);
 
     if (this.checked == true){
 
