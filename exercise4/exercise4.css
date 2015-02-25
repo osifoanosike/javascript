@@ -2,7 +2,7 @@ body {
   padding: 0;
 }
 div#wrapper {
-  height: 200px;
+  height: 100px;
   overflow: scroll;
 }
 
