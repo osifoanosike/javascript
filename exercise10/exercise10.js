@@ -15,18 +15,25 @@ FormHandler.prototype = {
       if(!currentField.value.trim()) {
         alert(currentField.name + ' can\'t be empty');
         returnVal = false;
+      } 
 
-      } else if(currentField.id == "about_me" && (!currentField.value.trim() || currentField.value.length < 50) ){
+      //do field specific checks
+      if(currentField.id == "about_me" && (!currentField.value.trim() || currentField.value.length < 50) ){
         alert('Mininum characters allowed for \''+ currentField.name + '\' is 50');
         returnVal = false;
+      
       } else if (currentField.id == "email") {
-      	if(!/^w+[-_.]{0,1}\w+@w+[.]*\w*$/.test(currentField.value)){
+      	var emailRegex = /^([A-Za-z0-9_\-\.]){1,}\@([A-Za-z0-9_\-\.]){1,}\.([A-Za-z]{2,4})$/;
+      	
+      	if(!emailRegex.test(currentField.value)){
       		alert("Please enter a valid email address");
       		returnVal = false;
       	}
 
-      }else if(currentField.id == "home_page"){
-      	if(!/^w+$/.test(currentField.value)){
+      } else if(currentField.id == "home_page"){
+      	var homepageRegex = /^(http:\/\/|(www|ww\d)|http:\/\/(www|ww\d))?([A-Za-z0-9_\-\.]){1,}\.[A-Za-z]{2,3}\/?$/;
+      	
+      	if(!homepageRegex.test(currentField.value)){
       		alert("Please enter a valid homepage url");
       		returnVal = false;
       	}
