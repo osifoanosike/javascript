@@ -11,19 +11,6 @@ function CheckBoxOperation(parentChkboxes){
 
 CheckBoxOperation.prototype = {
 
-  createChildList: function (active_item, item_array){
-
-    var fragment = document.createDocumentFragment();
-    var ul = document.createElement('ul');
-    var active_list = document.body.querySelector('li#' + active_item);    
-
-    for(var i = 0; i < item_array.length; i++) {
-      fragment.appendChild(that.createInnerCheckbox(active_item, item_array[i]));
-    }
-    ul.appendChild(fragment); 
-    active_list.appendChild(ul);
-  },
-
   createInnerCheckbox: function (parent_item, current_item){
     var li = document.createElement("li");
     var inner_div = document.createElement('div');
@@ -46,35 +33,33 @@ CheckBoxOperation.prototype = {
     return li;
   },
 
+  createChildList: function (active_item, item_array){
+
+    var fragment = document.createDocumentFragment();
+    var ul = document.createElement('ul');
+    var active_list = document.body.querySelector('li#' + active_item);    
+
+    for(var i = 0; i < item_array.length; i++) {
+      fragment.appendChild(that.createInnerCheckbox(active_item, item_array[i]));
+    }
+    ul.appendChild(fragment); 
+    active_list.appendChild(ul);
+  },
+
   hideChildList: function (active_item){
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
     that.clearState(child_list);
     child_list.setAttribute('hidden', 'true');
   },
 
-  showChildList: function (active_item, parent_item){
-    //check if child elements already exist before creating new ones
-    if(active_item.childElementCount > 1){
-      var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-      that.reselectChldItems(child_list);
-      child_list.removeAttribute('hidden');//makes the list visible;
-    } else {
-      switch(parent_item.id) {
-          case 'color':
-            that.createChildList(parent_item.id, that.colorChildList);
-            break;
-          case 'drinks':
-            that.createChildList(parent_item.id, that.drinksChildList);
-            break;
-          case 'movies':
-            that.createChildList(parent_item.id, that.moviesChildList);
-            break;
-          case 'bikes':
-            that.createChildList(parent_item.id, that.bikesChildList);
-            break;
-        }
-    }
-    
+  showChildList: function (active_item){
+    var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+    that.reselectChldItems(child_list);
+    child_list.removeAttribute('hidden');//makes the list visible;
+  },
+
+  hasChild: function(active_item){ 
+    return (active_item.childElementCount > 1);
   },
 
   reselectChldItems: function(childList) {
@@ -91,11 +76,39 @@ CheckBoxOperation.prototype = {
     }
   },
 
+  new_childList: function(active_item) {
+    switch(active_item.id) {
+      case 'color':
+        that.createChildList(active_item.id, that.colorChildList);
+        break;
+      case 'drinks':
+        that.createChildList(active_item.id, that.drinksChildList);
+        break;
+      case 'movies':
+        that.createChildList(active_item.id, that.moviesChildList);
+        break;
+      case 'bikes':
+        that.createChildList(active_item.id, that.bikesChildList);
+        break;
+    }
+
+    new_childList = that.displayChildList(active_item);
+  },
+
+  displayChildList: function(active_item){
+    console.log(active_item);
+    var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+    that.reselectChldItems(child_list);
+    child_list.removeAttribute('hidden');//makes the list visible;
+  },
+
   selectCheckBox: function() {
     var active_list = document.body.querySelector('li#' + this.id);
 
     if (this.checked == true){
-      that.showChildList(active_list, this);
+
+      //checks so i dont have to create a new sublist everytime
+      that.new_childList(active_list);
       active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
         
     } else {
