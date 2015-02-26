@@ -6,7 +6,8 @@ function FormHandler(regForm, notifCheck){
 
 FormHandler.prototype = {
   isFormValid: function(form_param){
-    var i, returnVal;
+    var i;
+    var returnVal = true;
     for(i = 0; i < form_param.elements.length; i++ ) {
       var currentField = form_param.elements[i];
 
@@ -18,8 +19,6 @@ FormHandler.prototype = {
       } else if(currentField.id == "about_me" && (!currentField.value.trim() || currentField.value.length < 50) ){
         alert('Mininum characters allowed for \''+ currentField.name + '\' is 50');
         returnVal = false;
-      } else {
-        returnVal = true
       }
     }
     return returnVal;
