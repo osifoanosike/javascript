@@ -1,7 +1,6 @@
 function CheckboxOp(checkboxGroup, none_checkbox){
   this.checkboxGroup = checkboxGroup;
   this.noneAction = none_checkbox;
-  // this.len = this.checkBoxes.length;
   this.selectedDays = [];
   that = this;
 }
@@ -16,7 +15,7 @@ CheckboxOp.prototype = {
     
     //ensure the code runs only when checkboxes are the target
     if (currentCheckbox.tagName == "INPUT") {
-      
+
       if(currentCheckbox.id != 'none') {
         if(that.selectedDays.length < 3 && currentCheckbox.checked == true){
             
@@ -55,26 +54,17 @@ CheckboxOp.prototype = {
 
 
   addEventListeners: function() {
-    // _this = this;
     that.noneAction.addEventListener('click', that.unselectAll);
-
     that.checkboxGroup.addEventListener('click', that.selectCheckbox);//delegating all checks to the enclosing section element
-    // for( i = this.len; i--; ) {
-    //   that.checkBoxes[i].addEventListener('click', that.selectCheckbox);
-    // }
   }
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
-
-  //var checkBoxes = document.body.querySelectorAll('input[type=checkbox]');
   var checkboxGroup = document.getElementById('checkbox-group');
   var noneAction = document.getElementById('none');
-
   var chkboxOps = new CheckboxOp(checkboxGroup, noneAction);
   chkboxOps.addEventListeners();
-
 });
 
 

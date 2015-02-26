@@ -4,7 +4,6 @@ function CheckBoxOperation(checkboxWrapper){
   this.drinksChildList = ['coke', 'pepsi', 'dew'];
   this.bikesChildList = ['V-rod', 'pulsar', 'cbz'];
   this.moviesChildList = ['Dar', 'Sir'];
-  // this.len = this.parentChkboxes.length;
 
   that = this;//storing the ref to this object
 }
@@ -137,10 +136,7 @@ CheckBoxOperation.prototype = {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  
   var checkboxWrapper = document.getElementById('wrapper');
-  var active_list = null; 
-
   var checkboxOps = new CheckBoxOperation(checkboxWrapper);
   checkboxOps.addEventHandler();  
 });
