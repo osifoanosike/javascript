@@ -1,10 +1,10 @@
-function CheckBoxOperation(parentChkboxes){
-  this.parentChkboxes = parentChkboxes;
+function CheckBoxOperation(checkboxWrapper){
+  this.checkboxWrapper = checkboxWrapper;
   this.colorChildList  = ['red', 'yellow', 'green', 'blue'];
   this.drinksChildList = ['coke', 'pepsi', 'dew'];
   this.bikesChildList = ['V-rod', 'pulsar', 'cbz'];
   this.moviesChildList = ['Dar', 'Sir'];
-  this.len = this.parentChkboxes.length;
+  // this.len = this.parentChkboxes.length;
 
   that = this;//storing the ref to this object
 }
@@ -102,34 +102,45 @@ CheckBoxOperation.prototype = {
     child_list.removeAttribute('hidden');//makes the list visible;
   },
 
-  selectCheckBox: function() {
-    var active_list = document.body.querySelector('li#' + this.id);
+  selectCheckBox: function(e) {
+    var currentCheckbox = e.target;
 
-    if (this.checked == true){
-
-      //checks so i dont have to create a new sublist everytime
-      that.new_childList(active_list);
-      active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
-        
-    } else {
-      that.hideChildList(active_list);
-    }       
+    if(that.matchesSelector(currentCheckbox, '.parentCheckbox')){
+      var active_list = document.body.querySelector('li#' + currentCheckbox.id);
+      if (currentCheckbox.checked == true) {
+        //checks so i dont have to create a new sublist everytime
+        that.new_childList(active_list);
+        active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
+          
+      } else {
+        that.hideChildList(active_list);
+      }       
+    }
   },
 
-  addEventListeners: function() {
-    for (i = that.len; i--;) {
-      that.parentChkboxes[i].addEventListener('click', that.selectCheckBox);
+   //had to write this to handle browser implementation differences
+  matchesSelector: function(element, selector) {
+    if(element.webkitMatchesSelector(selector)) {
+      return element.webkitMatchesSelector(selector);
+    } else if(element.mozMatchesSelector(selector)){
+      return element.mozMatchesSelector(selector);
+    } else if(element.msMatchesSelector(selector)) {
+      return element.msMatchesSelector(selector);
     }
+  },
+
+
+  addEventHandler: function() {
+    that.checkboxWrapper.addEventListener('click', that.selectCheckBox);//optimization by event delegation
   }
 
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   
-  var parentChkboxes = document.body.querySelectorAll('input[type=checkbox]');
-  
+  var checkboxWrapper = document.getElementById('wrapper');
   var active_list = null; 
 
-  var checkboxOps = new CheckBoxOperation(parentChkboxes)
-  checkboxOps.addEventListeners();  
+  var checkboxOps = new CheckBoxOperation(checkboxWrapper);
+  checkboxOps.addEventHandler();  
 });

@@ -159,17 +159,17 @@ Table.prototype = {
   performDelete: function() {
     currentRow = document.querySelector('tr#'+ this.classList[1]);
     currentRow.remove();
-  },
-
-  addEventHandlers: function() {
-    this.addRowButton.addEventListener('click', that.createRow);
-  },
+  },  
 
   isValidInput: function(name, email) {
     if(!email || !name) {
       return false;
     }
     return true;
+  },
+
+  addEventHandlers: function() {
+    this.addRowButton.addEventListener('click', that.createRow);
   }
 }
 

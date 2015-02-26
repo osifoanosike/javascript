@@ -1,7 +1,7 @@
-function CheckboxOp(checkBoxes, none_checkbox){
-  this.checkBoxes = checkBoxes;
+function CheckboxOp(checkboxGroup, none_checkbox){
+  this.checkboxGroup = checkboxGroup;
   this.noneAction = none_checkbox;
-  this.len = this.checkBoxes.length;
+  // this.len = this.checkBoxes.length;
   this.selectedDays = [];
   that = this;
 }
@@ -10,37 +10,43 @@ function CheckboxOp(checkBoxes, none_checkbox){
 CheckboxOp.prototype = {
   constructor: CheckboxOp,
 
-  selectCheckbox: function (){
+  selectCheckbox: function (e){
 
-    currentCheckbox = this;
-
-    if(currentCheckbox.id != 'none') {
-      if(that.selectedDays.length < 3 && currentCheckbox.checked == true){
-          
-        that.selectedDays.push(currentCheckbox.id.toString());
-
-          //deselects the none chkbox
-        that.noneAction.checked = false
-        
-      } else if (that.selectedDays.length >= 3 && currentCheckbox.checked == true) {
-          
-        //if array is full and user still tries to add
-        currentCheckbox.checked = false;
-        alert('Only 3 days can be selected.' + 
-          '\nYou have already selected ' + that.selectedDays[0] + ', ' + that.selectedDays[1] + ' and ' + that.selectedDays[2]);
+    currentCheckbox = e.target;
+    
+    //ensure the code runs only when checkboxes are the target
+    if (currentCheckbox.tagName == "INPUT") {
       
-      } else if(currentCheckbox.checked == false){
+      if(currentCheckbox.id != 'none') {
+        if(that.selectedDays.length < 3 && currentCheckbox.checked == true){
+            
+          that.selectedDays.push(currentCheckbox.id.toString());
 
-        //if the user unchecks...even if array is full
-        that.selectedDays.splice(that.selectedDays.indexOf(currentCheckbox.id), 1);
+            //deselects the none chkbox
+          that.noneAction.checked = false
+          
+        } else if (that.selectedDays.length >= 3 && currentCheckbox.checked == true) {
+            
+          //if array is full and user still tries to add
+          currentCheckbox.checked = false;
+          alert('Only 3 days can be selected.' + 
+            '\nYou have already selected ' + that.selectedDays[0] + ', ' + that.selectedDays[1] + ' and ' + that.selectedDays[2]);
+        
+        } else if(currentCheckbox.checked == false){
+
+          //if the user unchecks...even if array is full
+          that.selectedDays.splice(that.selectedDays.indexOf(currentCheckbox.id), 1);
+        }
       }
     }
   },
 
 
   unselectAll: function() {
-    for( i = that.checkBoxes.length; i--; ) {
-      that.checkBoxes[i].checked = false;  
+    var checkBoxes = that.checkboxGroup.querySelectorAll('input[type=checkbox]'), checkbox;
+    for( i = checkBoxes.length; i--; ) {
+      checkbox = checkBoxes[i]
+      checkbox.checked = false;  
     }
 
     this.checked = true;
@@ -52,19 +58,21 @@ CheckboxOp.prototype = {
     // _this = this;
     that.noneAction.addEventListener('click', that.unselectAll);
 
-    for( i = this.len; i--; ) {
-      that.checkBoxes[i].addEventListener('click', that.selectCheckbox);
-    }
+    that.checkboxGroup.addEventListener('click', that.selectCheckbox);//delegating all checks to the enclosing section element
+    // for( i = this.len; i--; ) {
+    //   that.checkBoxes[i].addEventListener('click', that.selectCheckbox);
+    // }
   }
 }
 
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  var checkBoxes = document.body.querySelectorAll('input[type=checkbox]');
+  //var checkBoxes = document.body.querySelectorAll('input[type=checkbox]');
+  var checkboxGroup = document.getElementById('checkbox-group');
   var noneAction = document.getElementById('none');
 
-  var chkboxOps = new CheckboxOp(checkBoxes, noneAction);
+  var chkboxOps = new CheckboxOp(checkboxGroup, noneAction);
   chkboxOps.addEventListeners();
 
 });
