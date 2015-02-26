@@ -9,7 +9,6 @@ FormHandler.prototype = {
     var i, returnVal;
     for(i = 0; i < form_param.elements.length; i++ ) {
       var currentField = form_param.elements[i];
-      console.log(currentField);
 
       // check for empty or null strings
       if(!currentField.value.trim()) {
@@ -28,7 +27,6 @@ FormHandler.prototype = {
 
   validateForm: function(e) {
     e.preventDefault();
-    console.log('prevented: ' + e.defaultPrevented);
 
     if(that.isFormValid(that.regForm)){
       that.regForm.submit();
