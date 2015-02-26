@@ -35,12 +35,11 @@ CheckboxOp.prototype = {
         that.selectedDays.splice(that.selectedDays.indexOf(currentCheckbox.id), 1);
       }
     }
-    console.log(that.selectedDays.length);
   },
 
 
   unselectAll: function() {
-    for( i = 0; i < that.checkBoxes.length; i++ ) {
+    for( i = that.checkBoxes.length; i--; ) {
       that.checkBoxes[i].checked = false;  
     }
 
@@ -53,9 +52,7 @@ CheckboxOp.prototype = {
     // _this = this;
     that.noneAction.addEventListener('click', that.unselectAll);
 
-    for( i = 0; i < this.len; i++ ) {
-      // console.log(this.checkBoxes[i]);
-
+    for( i = this.len; i--; ) {
       that.checkBoxes[i].addEventListener('click', that.selectCheckbox);
     }
   }

@@ -39,7 +39,7 @@ CheckBoxOperation.prototype = {
     var ul = document.createElement('ul');
     var active_list = document.body.querySelector('li#' + active_item);    
 
-    for(var i = 0; i < item_array.length; i++) {
+    for(var i = item_array.length; i--;) {
       fragment.appendChild(that.createInnerCheckbox(active_item, item_array[i]));
     }
     ul.appendChild(fragment); 
@@ -64,14 +64,14 @@ CheckBoxOperation.prototype = {
 
   reselectChldItems: function(childList) {
     var childItems = childList.querySelectorAll('input[type=checkbox]')
-    for(i=0; i < childItems.length; i++) {
+    for(i = childItems.length; i--;) {
       childItems[i].checked = true;
     }
   },
 
   clearState: function(childList) {
     var childItems = childList.querySelectorAll('input[type=checkbox]')
-    for(i=0; i < childItems.length; i++) {
+    for(var i = childItems.length; i--;) {
       childItems[i].removeAttribute('checked');
     }
   },
@@ -117,7 +117,7 @@ CheckBoxOperation.prototype = {
   },
 
   addEventListeners: function() {
-    for (i = 0; i < that.len; i++) {
+    for (i = that.len; i--;) {
       that.parentChkboxes[i].addEventListener('click', that.selectCheckBox);
     }
   }

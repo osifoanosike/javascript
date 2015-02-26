@@ -7,19 +7,22 @@ body {
 section#selectbox_group {
 	position: relative;
 }
+
 #countries_A , #countries_B{
-	display: inline-block;
+	/*display: inline-block;*/
+	float: left;
 	width: 40%;
 	min-height: 120px;
 }
 
 #controls  {
 	width: 15%;
-	display: inline-block;
+	float: left;
+	margin: 5px;
+	margin-top: 2em;
 }
 
-#controls button{
-	display: block;
+#controls button {
 	width: 100%;
 	margin: 3px 0;
 }

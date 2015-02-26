@@ -15,7 +15,8 @@ CheckboxHandler.prototype = {
   },
 
   setCheckedState: function(state) {
-    for(var i = 0; i < that.checkboxes.length; i++) {
+    //decrementing loop for optimization
+    for(var i = that.checkboxes.length; i--;) {
       that.checkboxes[i].checked = state;
     }
   },
