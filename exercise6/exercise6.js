@@ -3,19 +3,6 @@ function FormHandler(form, notificationCheck){
 }
 
 FormHandler.prototype = {
-  validateFieldContent: function(field){
-    var result = null;
-    if(!field.value.trim()) {
-      alert(field.name + ' can\'t be empty');
-      result = false;  
-    } else if(field.id == "about_me") {
-      result = this.validateFieldLength(field);
-    } else if (field.id == "notifCheck"){
-      result = this.validateNotificationCheck(field);
-    } 
-    return result;
-  },
-
   validateForm: function(form_param){
     var returnVal = true, i;
     for(i = 0; i < form_param.elements.length; i++ ) {
@@ -29,6 +16,19 @@ FormHandler.prototype = {
       
     }
     return returnVal;
+  },
+
+  validateFieldContent: function(field){
+    var result = null;
+    if(!field.value.trim()) {
+      alert(field.name + ' can\'t be empty');
+      result = false;  
+    } else if(field.id == "about_me") {
+      result = this.validateFieldLength(field);
+    } else if (field.id == "notifCheck"){
+      result = this.validateNotificationCheck(field);
+    } 
+    return result;
   },
 
   validateFieldLength: function(field) {
