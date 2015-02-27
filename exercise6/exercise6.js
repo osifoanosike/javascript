@@ -1,11 +1,11 @@
-function FormHandler(regForm, notifCheck){
-  this.regForm = regForm;
-  this.notifCheck = notifCheck;
+function FormHandler(form, notificationCheck){
+  this.form = form;
+  this.notificationCheck = notificationCheck;
   that = this;
 }
 
 FormHandler.prototype = {
-  isFormValid: function(form_param){
+  validateForm: function(form_param){
     var i;
     var returnVal = true;
     for(i = 0; i < form_param.elements.length; i++ ) {
@@ -16,23 +16,29 @@ FormHandler.prototype = {
         alert(currentField.name + ' can\'t be empty');
         returnVal = false;
 
-      } else if(currentField.id == "about_me" && (!currentField.value.trim() || currentField.value.length < 50) ){
-        alert('Mininum characters allowed for \''+ currentField.name + '\' is 50');
-        returnVal = false;
+      } else if(currentField.id == "about_me") {
+        returnVal = validateFieldLength(currentField);
       }
     }
     return returnVal;
   },
 
-  validateForm: function(e) {
-    e.preventDefault();
-
-    if(that.isFormValid(that.regForm)){
-      that.regForm.submit();
+  validateFieldLength: function(field) {
+    if(field.value.length < 50) {
+        alert('Mininum characters allowed for \''+ field.name + '\' is 50');
+        returnVal = false;
     }
   },
 
-  confirmNotif: function(){
+  validate: function(e) {
+    e.preventDefault();
+
+    if(that.validateForm(that.form)){
+      that.form.submit();
+    }
+  },
+
+  confirmNotification: function(){
     if(this.checked == true) {
       if(confirm("You sure you want to recieve notifications?")){
         this.checked = true;
@@ -43,16 +49,15 @@ FormHandler.prototype = {
   },
 
   addEventHandlers: function(){
-    that.regForm.addEventListener('submit', that.validateForm); 
-    that.notifCheck.addEventListener('click', that.confirmNotif);
+    that.form.addEventListener('submit', that.validate); 
+    that.notificationCheck.addEventListener('click', that.confirmNotification);
   }
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-
   var form = document.getElementById('regForm');
-  var notif_confirm = document.getElementById('notifCheck');
-  var formHandler = new FormHandler(form, notif_confirm);
+  var notifCheckbox = document.getElementById('notifCheck');
+  var formHandler = new FormHandler(form, notifCheckbox);
 
   formHandler.addEventHandlers();
 });
