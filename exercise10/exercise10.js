@@ -17,6 +17,30 @@ FormHandler.prototype = {
     return returnVal;
   },
 
+  validateFieldContent: function(currentField){
+    var result = null;
+    if(!currentField.value.trim()) {
+      alert(currentField.name + ' can\'t be empty');
+      result = false;  
+    } else if(currentField.id == "notifCheck"){
+          result = this.validateNotificationCheck(currentField);
+    } else {
+      //since there's value inside the field, now check if its a valid value
+      switch(currentField.id){
+        case "about_me":
+          result = this.validateFieldLength(currentField);
+          break;      
+        case "email": 
+          result = this.validateEmail(currentField);
+          break;
+        case "home_page": 
+          result = this.validateHomepageUrl(currentField);
+          break;
+      }
+    }
+    return result;
+  },
+
   validateFieldLength: function(field) {
     if(field.value.length < 50) {
         alert('Mininum characters allowed for \''+ field.name + '\' is 50');
@@ -40,30 +64,6 @@ FormHandler.prototype = {
       alert("Please enter a valid homepage url");
       returnVal = false;
     }
-  },
-
-  validateFieldContent: function(currentField){
-    var result = null;
-    if(!currentField.value.trim()) {
-      alert(currentField.name + ' can\'t be empty');
-      result = false;  
-    } else if(currentField.id == "notifCheck"){
-          result = this.validateNotificationCheck(currentField);
-    } else {
-      //since there's value inside the field, now check if its a valid value
-      switch(currentField.id){
-        case "about_me":
-          result = this.validateFieldLength(currentField);
-          break;      
-        case "email": 
-          result = this.validateEmail(currentField);
-          break;
-        case "home_page": 
-          result = this.validateHomepageUrl(currentField);
-          break;
-      }
-    }
-    return result;
   },
 
   validateNotificationCheck: function(field){
