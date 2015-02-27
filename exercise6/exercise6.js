@@ -17,7 +17,7 @@ FormHandler.prototype = {
         returnVal = false;
 
       } else if(currentField.id == "about_me") {
-        returnVal = validateFieldLength(currentField);
+        returnVal = that.validateFieldLength(currentField);
       }
     }
     return returnVal;
