@@ -1,24 +1,24 @@
 function FormHandler(form, notificationCheck){
   this.form = form;
-  this.notificationCheck = notificationCheck;
-  that = this;
 }
 
 FormHandler.prototype = {
   validateForm: function(form_param){
-    var i;
-    var returnVal = true;
+    var returnVal = true, i;
     for(i = 0; i < form_param.elements.length; i++ ) {
-      var currentField = form_param.elements[i];
+      var currentField = form_param.elements[i], result;
 
-      // check for empty or null strings
-      if(!currentField.value.trim()) {
-        alert(currentField.name + ' can\'t be empty');
-        returnVal = false;
+      // check for empty or null strings and only change returnVal if result if false
+      result = this.validateFieldContent(currentField);
+      returnVal = (result == false) ? result : returnVal;
 
-      } else if(currentField.id == "about_me") {
-        returnVal = that.validateFieldLength(currentField);
-      }
+      if(currentField.id == "about_me") {
+        result = this.validateFieldLength(currentField);
+        returnVal = (result == false) ? result : returnVal;
+      } else if (currentField.id == "notifCheck"){
+        result = this.validateNotificationCheck(currentField);
+        returnVal = (result == false) ? result : returnVal;
+      } 
     }
     return returnVal;
   },
@@ -26,31 +26,34 @@ FormHandler.prototype = {
   validateFieldLength: function(field) {
     if(field.value.length < 50) {
         alert('Mininum characters allowed for \''+ field.name + '\' is 50');
-        returnVal = false;
+        return false;
     }
   },
 
-  validate: function(e) {
-    e.preventDefault();
-
-    if(that.validateForm(that.form)){
-      that.form.submit();
+  validateFieldContent: function(field){
+    if(!field.value.trim()) {
+      alert(field.name + ' can\'t be empty');
+      return false;  
     }
   },
 
-  confirmNotification: function(){
-    if(this.checked == true) {
-      if(confirm("You sure you want to recieve notifications?")){
-        this.checked = true;
-      } else {
-        this.checked = false;
-      }
+  validateNotificationCheck: function(field){
+    if(!field.checked) {
+      alert('You\'ll need to accept notifications');
+      return false;
     }
   },
 
   addEventHandlers: function(){
-    that.form.addEventListener('submit', that.validate); 
-    that.notificationCheck.addEventListener('click', that.confirmNotification);
+    var that = this;
+
+    that.form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var result = that.validateForm(this);
+      if(result){
+        this.submit();
+      }
+    });
   }
 }
 
