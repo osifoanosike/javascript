@@ -4,8 +4,6 @@ function CheckBoxOperation(checkboxWrapper){
   this.drinksChildList = ['coke', 'pepsi', 'dew'];
   this.bikesChildList = ['V-rod', 'pulsar', 'cbz'];
   this.moviesChildList = ['Dar', 'Sir'];
-
-  that = this;//storing the ref to this object
 }
 
 CheckBoxOperation.prototype = {
@@ -39,7 +37,7 @@ CheckBoxOperation.prototype = {
     var active_list = document.body.querySelector('li#' + active_item);    
 
     for(var i = item_array.length; i--;) {
-      fragment.appendChild(that.createInnerCheckbox(active_item, item_array[i]));
+      fragment.appendChild(this.createInnerCheckbox(active_item, item_array[i]));
     }
     ul.appendChild(fragment); 
     active_list.appendChild(ul);
@@ -47,13 +45,13 @@ CheckBoxOperation.prototype = {
 
   hideChildList: function (active_item){
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    that.clearState(child_list);
+    this.clearState(child_list);
     child_list.setAttribute('hidden', 'true');
   },
 
   showChildList: function (active_item){
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    that.reselectChldItems(child_list);
+    this.reselectChldItems(child_list);
     child_list.removeAttribute('hidden');//makes the list visible;
   },
 
@@ -78,59 +76,46 @@ CheckBoxOperation.prototype = {
   new_childList: function(active_item) {
     switch(active_item.id) {
       case 'color':
-        that.createChildList(active_item.id, that.colorChildList);
+        this.createChildList(active_item.id, this.colorChildList);
         break;
       case 'drinks':
-        that.createChildList(active_item.id, that.drinksChildList);
+        this.createChildList(active_item.id, this.drinksChildList);
         break;
       case 'movies':
-        that.createChildList(active_item.id, that.moviesChildList);
+        this.createChildList(active_item.id, this.moviesChildList);
         break;
       case 'bikes':
-        that.createChildList(active_item.id, that.bikesChildList);
+        this.createChildList(active_item.id, this.bikesChildList);
         break;
     }
 
-    new_childList = that.displayChildList(active_item);
+    new_childList = this.displayChildList(active_item);
   },
 
   displayChildList: function(active_item){
     console.log(active_item);
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    that.reselectChldItems(child_list);
+    this.reselectChldItems(child_list);
     child_list.removeAttribute('hidden');//makes the list visible;
   },
 
-  selectCheckBox: function(e) {
-    var currentCheckbox = e.target;
-
-    if(that.matchesSelector(currentCheckbox, '.parentCheckbox')){
-      var active_list = document.body.querySelector('li#' + currentCheckbox.id);
-      if (currentCheckbox.checked == true) {
-        //checks so i dont have to create a new sublist everytime
-        that.new_childList(active_list);
-        active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
-          
-      } else {
-        that.hideChildList(active_list);
-      }       
-    }
-  },
-
-   //had to write this to handle browser implementation differences
-  matchesSelector: function(element, selector) {
-    if(element.webkitMatchesSelector(selector)) {
-      return element.webkitMatchesSelector(selector);
-    } else if(element.mozMatchesSelector(selector)){
-      return element.mozMatchesSelector(selector);
-    } else if(element.msMatchesSelector(selector)) {
-      return element.msMatchesSelector(selector);
-    }
-  },
-
-
   addEventHandler: function() {
-    that.checkboxWrapper.addEventListener('click', that.selectCheckBox);//optimization by event delegation
+    var that = this;
+    this.checkboxWrapper.addEventListener('click', function(e) {
+      var currentCheckbox = e.target;
+
+      if(currentCheckbox.matches('.parentCheckbox')){
+        var active_list = document.body.querySelector('li#' + currentCheckbox.id);
+        if (currentCheckbox.checked == true) {
+          //checks so i dont have to create a new sublist everytime
+          that.new_childList(active_list);
+          active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
+            
+        } else {
+          that.hideChildList(active_list);
+        }       
+      }
+    });//optimization by event delegation
   }
 
 }
