@@ -7,7 +7,6 @@ function Table(addRowButton){
   
   this.tbody = document.createElement('tbody');
   this.table.appendChild(this.tbody);
-  that = this;
 }
 
 Table.prototype = {
@@ -45,27 +44,85 @@ Table.prototype = {
 
   createSaveButton: function(count) {
     var saveField = document.createElement('input');
+    var that = this;
     saveField.setAttribute('type', 'submit');
     saveField.setAttribute('value', 'Save');
     saveField.setAttribute('class', 'save row_' + count );
 
-    saveField.addEventListener('click', that.performSave);
+    saveField.addEventListener('click', function() {
+      var rowID = this.classList[1];
+      var currentRowCount = rowID.split('_')[1];
+
+      //get the tr to be manipulated
+      var currentRow = document.body.querySelector('tr#' + rowID);
+
+      //the values in the input fields into a label for a later use.
+      var nameField = currentRow.querySelector('td input.name.' + rowID);
+      var emailField = currentRow.querySelector('td input.email.' + rowID);
+      
+      
+      if (that.isValidInput(nameField.value, emailField.value)) {
+
+        //create a label and set the stored values as the text prop
+        nameField.parentNode.replaceChild(that.createNameLabel(currentRowCount, nameField.value), nameField);
+        emailField.parentNode.replaceChild(that.createEmailLabel(currentRowCount, emailField.value), emailField);
+        
+        //create a fregment to hold edit and delete links...before insertion to DOM
+        var actionsFragment = document.createDocumentFragment();
+        actionsFragment.appendChild(that.createEditLink(currentRowCount));
+        actionsFragment.appendChild(document.createTextNode(' | '));
+        actionsFragment.appendChild(that.createDeleteLink(currentRowCount));
+        this.parentNode.replaceChild(actionsFragment, this);
+
+      } else {
+        alert("Please ensure both fields have valid input");
+      } 
+    });
 
     return saveField;
   },
 
   createEditLink: function(count){
-    var editLink = document.createElement('a');
+    var editLink = document.createElement('a'), that = this;
     editLink.setAttribute('href', '#');
     editLink.setAttribute('class', 'edit row_' + count );
     editLink.appendChild(document.createTextNode('Edit'));
-    editLink.addEventListener('click', that.performEdit);
+
+
+    editLink.addEventListener('click', function(){
+
+      //use the current rowCount id to maintain target during row manipulation
+      var rowID = this.classList[1];
+      var currentRowCount = rowID.split('_')[1];
+     
+      var currentRow = document.body.querySelector('tr#' + rowID);
+
+      // store the values in the labels, for editinh purpose
+      var nameValue = currentRow.querySelector('td label.name.' + rowID).innerHTML;
+      var emailValue = currentRow.querySelector('td label.email.' + rowID).innerHTML;
+      
+      //create input fields and set their values to the stored labels values
+      var nameField = that.createNameField(currentRowCount);
+      var emailField = that.createEmailField(currentRowCount);
+      nameField.setAttribute('value', nameValue);
+      emailField.setAttribute('value', emailValue);
+
+      //replace labels with input fields
+      currentRow.cells[0].replaceChild(nameField, currentRow.cells[0].firstChild);
+      currentRow.cells[1].replaceChild(emailField, currentRow.cells[1].firstChild);
+
+      //remove all the children elements and replace with save button
+      while (currentRow.cells[2].firstChild) {
+        currentRow.cells[2].removeChild(currentRow.cells[2].firstChild);
+      }
+      currentRow.cells[2].appendChild(that.createSaveButton(currentRowCount));
+    });
     
     return editLink
   },
 
   createDeleteLink: function(count) {
-    var deleteLink = document.createElement('a');
+    var deleteLink = document.createElement('a'), that = this;
     deleteLink.setAttribute('href', '#');
 
     /**count -1 because the count ws incremented after row was 
@@ -73,87 +130,13 @@ Table.prototype = {
     i need to -1 to get to the actual index*/
     deleteLink.setAttribute('class', 'delete row_' + count );
     deleteLink.appendChild(document.createTextNode('Delete'));
-    deleteLink.addEventListener('click', that.performDelete);
+
+    deleteLink.addEventListener('click', function() {
+      currentRow = document.querySelector('tr#'+ this.classList[1]);
+      currentRow.remove();
+    });
 
     return deleteLink;
-  },
-
-  createRow: function(){
-    
-    var activeRow = that.tbody.insertRow(0);//this adds a new row
-    activeRow.setAttribute('id', 'row_' + that.rowCount);
-    activeRow.insertCell(0);
-    activeRow.cells[0].appendChild(that.createNameField(that.rowCount));
-
-    activeRow.insertCell(1);
-    activeRow.cells[1].appendChild(that.createEmailField(that.rowCount));
-
-    activeRow.insertCell(2);
-    activeRow.cells[2].appendChild(that.createSaveButton(that.rowCount));
-
-    console.log(activeRow);
-    that.tbody.appendChild(activeRow); 
-    that.rowCount++;
-  },
-
-  performSave: function() {
-
-    var rowID = this.classList[1];
-    var currentRowCount = rowID.split('_')[1];
-
-    //get the tr to be manipulated
-    var currentRow = document.body.querySelector('tr#' + rowID);
-
-    //the values in the input fields into a label for a later use.
-    var nameField = currentRow.querySelector('td input.name.' + rowID);
-    var emailField = currentRow.querySelector('td input.email.' + rowID);
-    
-    
-    if (that.isValidInput(nameField.value, emailField.value)) {
-
-      //create a label and set the stored values as the text prop
-      nameField.parentNode.replaceChild(that.createNameLabel(currentRowCount, nameField.value), nameField);
-      emailField.parentNode.replaceChild(that.createEmailLabel(currentRowCount, emailField.value), emailField);
-      
-      //create a fregment to hold edit and delete links...before insertion to DOM
-      var actionsFragment = document.createDocumentFragment();
-      actionsFragment.appendChild(that.createEditLink(currentRowCount));
-      actionsFragment.appendChild(document.createTextNode(' | '));
-      actionsFragment.appendChild(that.createDeleteLink(currentRowCount));
-      this.parentNode.replaceChild(actionsFragment, this);
-
-    } else {
-      alert("Please ensure both fields have valid input");
-    } 
-  },
-
-  performEdit: function(){
-
-    //use the current rowCount id to maintain target during row manipulation
-    var rowID = this.classList[1];
-    var currentRowCount = rowID.split('_')[1];
-   
-    var currentRow = document.body.querySelector('tr#' + rowID);
-
-    // store the values in the labels, for editinh purpose
-    var nameValue = currentRow.querySelector('td label.name.' + rowID).innerHTML;
-    var emailValue = currentRow.querySelector('td label.email.' + rowID).innerHTML;
-    
-    //create input fields and set their values to the stored labels values
-    var nameField = that.createNameField(currentRowCount);
-    var emailField = that.createEmailField(currentRowCount);
-    nameField.setAttribute('value', nameValue);
-    emailField.setAttribute('value', emailValue);
-
-    //replace labels with input fields
-    currentRow.cells[0].replaceChild(nameField, currentRow.cells[0].firstChild);
-    currentRow.cells[1].replaceChild(emailField, currentRow.cells[1].firstChild);
-
-    //remove all the children elements and replace with save button
-    while (currentRow.cells[2].firstChild) {
-      currentRow.cells[2].removeChild(currentRow.cells[2].firstChild);
-    }
-    currentRow.cells[2].appendChild(that.createSaveButton(currentRowCount));
   },
 
   performDelete: function() {
@@ -169,7 +152,24 @@ Table.prototype = {
   },
 
   addEventHandlers: function() {
-    this.addRowButton.addEventListener('click', that.createRow);
+    var that = this;
+    this.addRowButton.addEventListener('click', function(){
+    
+      var activeRow = that.tbody.insertRow(0);//this adds a new row
+      activeRow.setAttribute('id', 'row_' + that.rowCount);
+      activeRow.insertCell(0);
+      activeRow.cells[0].appendChild(that.createNameField(that.rowCount));
+
+      activeRow.insertCell(1);
+      activeRow.cells[1].appendChild(that.createEmailField(that.rowCount));
+
+      activeRow.insertCell(2);
+      activeRow.cells[2].appendChild(that.createSaveButton(that.rowCount));
+
+      console.log(activeRow);
+      that.tbody.appendChild(activeRow); 
+      that.rowCount++;
+    });
   }
 }
 

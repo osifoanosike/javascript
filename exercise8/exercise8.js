@@ -1,6 +1,5 @@
 
 function UrlLoader(){
-  that = this;
 }
 
 UrlLoader.prototype = {
@@ -14,7 +13,7 @@ UrlLoader.prototype = {
 
   loadUrl: function(url){
     url = prompt('please enter a url');
-    if(that.isValidUrl(url)){
+    if(this.isValidUrl(url)){
       //trim url and open in new frame.
       if(url.indexOf('http://') == -1){
         url  = 'http://' + url;

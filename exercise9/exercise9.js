@@ -29,19 +29,18 @@ CountryChooser.prototype = {
     }
   },
 
-  remove: function(){
-    var primaryList = that.countryListB; //list on which the selection happens
-    that.moveCountries(primaryList, that.countryListA, that.getSelectedOptions(primaryList));
-  },
-
-  add: function(){
-    var primaryList = that.countryListA;//list on which the selection happens
-    that.moveCountries(primaryList, that.countryListB, that.getSelectedOptions(primaryList));
-  },
 
   addEventHandlers: function() {
-    that.addButton.addEventListener('click', that.add);
-    that.removeButton.addEventListener('click', that.remove);
+    that = this;
+    that.addButton.addEventListener('click', function(){
+      var primaryList = that.countryListA;//list on which the selection happens
+      that.moveCountries(primaryList, that.countryListB, that.getSelectedOptions(primaryList));
+    });
+
+    that.removeButton.addEventListener('click', function(){
+      var primaryList = that.countryListB; //list on which the selection happens
+      that.moveCountries(primaryList, that.countryListA, that.getSelectedOptions(primaryList));
+    });
   }
 }
 

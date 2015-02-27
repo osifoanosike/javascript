@@ -1,7 +1,6 @@
 function FormHandler(regForm, notifCheck){
   this.regForm = regForm;
   this.notifCheck = notifCheck;
-  that = this;
 }
 
 FormHandler.prototype = {
@@ -42,26 +41,24 @@ FormHandler.prototype = {
     return returnVal;
   },
 
-  validateForm: function(e) {
-    e.preventDefault();
-    if(that.isFormValid(that.regForm)){
-      that.regForm.submit();
-    }
-  },
-
-  confirmNotif: function(){
-    if(this.checked == true) {
-      if(confirm("You sure you want to recieve notifications?")){
-        this.checked = true;
-      } else {
-        this.checked = false;
-      }
-    }
-  },
-
   addEventHandlers: function(){
-    that.regForm.addEventListener('submit', that.validateForm); 
-    that.notifCheck.addEventListener('click', that.confirmNotif);
+    var that = this;
+    this.regForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if(that.isFormValid(that.regForm)){
+        that.regForm.submit();
+      }
+    }); 
+
+    this.notifCheck.addEventListener('click', function(){
+      if(this.checked == true) {
+        if(confirm("You sure you want to recieve notifications?")){
+          this.checked = true;
+        } else {
+          this.checked = false;
+        }
+      }
+    });
   }
 }
 

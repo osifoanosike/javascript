@@ -4,21 +4,20 @@ function FormOperation(form){
 }
 
 FormOperation.prototype = {
-  doSubmit: function() {
-    event.preventDefault();
-    var input = that.currform['number'].value;
-
-    if(/^\d+$/.test(input.trim())){
-      that.currform['result'].value = "true";
-      that.currform.submit();
-    }
-    else{
-      that.currform['result'].value = "false";
-    }
-  },
-
   addEventHandlers: function(){
-    that.currform.addEventListener('submit', that.doSubmit);
+    var that = this;
+    this.currform.addEventListener('submit', function() {
+      event.preventDefault();
+      var input = that.currform['number'].value;
+
+      if(/^\d+$/.test(input.trim())){
+        that.currform['result'].value = "true";
+        that.currform.submit();
+      }
+      else{
+        that.currform['result'].value = "false";
+      }
+    });
   }
 }
 

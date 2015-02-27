@@ -2,29 +2,34 @@ function CheckboxHandler(checkboxes, checkbox_all, checkbox_none){
   this.checkboxes = checkboxes;
   this.checkbox_all = checkbox_all;
   this.checkbox_none = checkbox_none;
-  that = this;
 }
 
 CheckboxHandler.prototype = {
   selectAllItems: function(){
-    that.setCheckedState(true);
+    this.setCheckedState(true);
   },
 
   unselectAllItems: function() {
-    that.setCheckedState(false);
+    this.setCheckedState(false);
   },
 
   setCheckedState: function(state) {
     //decrementing loop for optimization
-    for(var i = that.checkboxes.length; i--;) {
-      that.checkboxes[i].checked = state;
+    for(var i = this.checkboxes.length; i--;) {
+      this.checkboxes[i].checked = state;
     }
   },
 
   addEventHandlers: function() {
-    var _this = this;
-    this.checkbox_all.addEventListener('click', _this.setCheckedState);
-    this.checkbox_none.addEventListener('click', _this.unselectAllItems);
+    var that = this;
+    this.checkbox_all.addEventListener('click', function() {
+      //decrementing loop for optimization
+      that.setCheckedState(true);
+    });
+
+    this.checkbox_none.addEventListener('click', function() {
+      that.setCheckedState(false);
+    });
   }
 }
 

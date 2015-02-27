@@ -1,7 +1,6 @@
 function User() {
   this.firstname = "";
   this.lastname = "";
-  that = this;
 }
 
 User.prototype = {
@@ -10,14 +9,14 @@ User.prototype = {
     for(i = 0; i < fields.length; i++){
       var input = prompt('Enter your ' + fields[i]);
 
-      if(that.inputIsValid(fields[i], input)){
+      if(this.inputIsValid(fields[i], input)){
         this[fields[i]] = input;
       }
     }
     //if both array was populated wits both names
-    if (that.firstname && that.lastname) {
-      alert('Hello ' + that.firstname +', ' + that.lastname );
-      document.body.innerHTML = 'Hello ' + that.firstname +', ' + that.lastname;
+    if (this.firstname && this.lastname) {
+      alert('Hello ' + this.firstname +', ' + this.lastname );
+      document.body.innerHTML = 'Hello ' + this.firstname +', ' + this.lastname;
     }
   },
 
