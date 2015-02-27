@@ -53,16 +53,15 @@ FormHandler.prototype = {
         
     if(!emailRegex.test(field.value)){
       alert("Please enter a valid email address");
-      returnVal = false;
+      return false;
     }
   },
 
   validateHomepageUrl: function(field) {
-    var homepageRegex = /^(http:\/\/|(www|ww\d)|http:\/\/(www|ww\d))?([A-Za-z0-9_\-\.]){1,}\.[A-Za-z]{2,3}\/?$/;
-        
+    var homepageRegex = /^(http:\/\/|(www|ww\d)|http:\/\/(www|ww\d))?([A-Za-z0-9_\-\.]){1,}\.[A-Za-z]{2,3}\/?$/;     
     if(!homepageRegex.test(field.value)){
       alert("Please enter a valid homepage url");
-      returnVal = false;
+      return false;
     }
   },
 
