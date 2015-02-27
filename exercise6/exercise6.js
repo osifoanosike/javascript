@@ -8,17 +8,12 @@ FormHandler.prototype = {
     for(i = 0; i < form_param.elements.length; i++ ) {
       var currentField = form_param.elements[i], result;
 
-      // check for empty or null strings and only change returnVal if result if false
-      result = this.validateFieldContent(currentField);
-      returnVal = (result == false) ? result : returnVal;
-
-      if(currentField.id == "about_me") {
-        result = this.validateFieldLength(currentField);
+       if(currentField.matches('.input-field')) {
+        // check for empty or null strings and only change returnVal if result if false
+        result = this.validateFieldContent(currentField);
         returnVal = (result == false) ? result : returnVal;
-      } else if (currentField.id == "notifCheck"){
-        result = this.validateNotificationCheck(currentField);
-        returnVal = (result == false) ? result : returnVal;
-      } 
+      }
+      
     }
     return returnVal;
   },
@@ -31,10 +26,16 @@ FormHandler.prototype = {
   },
 
   validateFieldContent: function(field){
+    var result = null;
     if(!field.value.trim()) {
       alert(field.name + ' can\'t be empty');
-      return false;  
-    }
+      result = false;  
+    } else if(field.id == "about_me") {
+      result = this.validateFieldLength(field);
+    } else if (field.id == "notifCheck"){
+      result = this.validateNotificationCheck(field);
+    } 
+    return result;
   },
 
   validateNotificationCheck: function(field){
