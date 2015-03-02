@@ -25,7 +25,7 @@ CountryChooser.prototype = {
   moveCountries: function(from_list, to_list, selected_options) {
     for(i = 0; i < selected_options.length; i++) {
       from_list.remove(selected_options[i].index);//removes
-      to_list.add(selected_options[i], undefined);//adds
+      to_list.add(selected_options[i]);//adds
     }
   },
 
@@ -33,13 +33,13 @@ CountryChooser.prototype = {
   addEventHandlers: function() {
     that = this;
     that.addButton.addEventListener('click', function(){
-      var primaryList = that.countryListA;//list on which the selection happens
-      that.moveCountries(primaryList, that.countryListB, that.getSelectedOptions(primaryList));
+      var selectedList = that.countryListA;//list on which the selection happens
+      that.moveCountries(selectedList, that.countryListB, that.getSelectedOptions(selectedList));
     });
 
     that.removeButton.addEventListener('click', function(){
-      var primaryList = that.countryListB; //list on which the selection happens
-      that.moveCountries(primaryList, that.countryListA, that.getSelectedOptions(primaryList));
+      var selectedList = that.countryListB; //list on which the selection happens
+      that.moveCountries(selectedList, that.countryListA, that.getSelectedOptions(selectedList));
     });
   }
 }
