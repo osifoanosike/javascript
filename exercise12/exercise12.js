@@ -7,11 +7,11 @@ DomainMatcher.prototype = {
       event.preventDefault();
       var urlText = that.urlForm['urlText'].value;
 
-      var regex = /^((ft|htt)p:\/\/)?(www\.)?(([a-z\d]+[_\-]?)+)\.(([a-z\d]+[_\-\.]?)(\.[a-z]{2,3}){1,2})$/ig
-      if(regex.test(urlText)) {
+      var regex = /^((ft|htt)p:\/\/)?(www\.)?(([a-z\d]+[_\-]?)+\.)?(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})$/;
          var result = regex.exec(urlText);
-        if(result[3] != undefined) {
-          alert('Domain: ' +  result[6] + '\nSubdomain: ' +  result[4]);//removes the trailing dot
+      if(regex.test(urlText)) {
+        if(result[5] != undefined) {
+          alert('Domain: ' +  result[6] + '\nSubdomain: ' +  result[5]);//removes the trailing dot
         }
         else {
           alert('Domain: ' +  result[6]);
@@ -20,7 +20,6 @@ DomainMatcher.prototype = {
       else{
         alert('The URL you entered is invalid');
       }
-     
   },
 
   addEventHandlers: function(){
