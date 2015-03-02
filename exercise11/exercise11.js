@@ -1,6 +1,5 @@
 function FormHandler(form){
   this.form = form;
-  that = this;
 }
 
 FormHandler.prototype = {
