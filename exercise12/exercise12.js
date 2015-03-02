@@ -6,14 +6,15 @@ DomainMatcher.prototype = {
   extractValues: function(){
       event.preventDefault();
       var urlText = that.urlForm['urlText'].value;
-      var regex = /(http:\/\/)?(www\.)?([A-Za-z0-9_\-]{1,}\.)?([A-Za-z0-9_\-]{3,}\.[A-Za-z]{2,3}(\.[A-Za-z]{2})?)/ig;
+
+      var regex = /^((ft|htt)p:\/\/)?(www\.)?(([a-z\d]+[_\-]?)+)\.(([a-z\d]+[_\-\.]?)(\.[a-z]{2,3}){1,2})$/ig
       var result = regex.exec(urlText);
 
       if(result[3] != undefined) {
-        alert('Domain: ' +  result[4] + '\nSubdomain: ' +  result[3].slice(0, -1));//removes the trailing dot
+        alert('Domain: ' +  result[6] + '\nSubdomain: ' +  result[4]);//removes the trailing dot
       }
       else {
-        alert('Domain: ' +  result[4]);
+        alert('Domain: ' +  result[6]);
       }
   },
 

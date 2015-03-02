@@ -53,9 +53,9 @@ FormHandler.prototype = {
   },
 
   validateEmail: function(field) {
-    
-    var emailRegex = /^([a-z][a-z\d_\-\.]*)\@([a-z\d_\-]{1,}\.)?([a-z\d_\-]{1,}\.[a-z]{2,3}(\.[a-z]{2})?)$/i;
-        
+
+    var emailRegex = /^([a-z]([a-z\d][_\-\.]{0,1})*)\@([a-z\d]+[_\-\.]?){1,2}(\.[a-z]{2,3}){1,2}$/i;
+
     if(!emailRegex.test(field.value)){
       alert("Please enter a valid email address");
       return false;
@@ -63,7 +63,7 @@ FormHandler.prototype = {
   },
 
   validateHomepageUrl: function(field) {
-    var homepageRegex = /^((ft|htt)p:\/\/)?(www\.)?([a-z\d_\-]{1,}\.)?([a-z\d_\-]{1,}\.[a-z]{2,3}(\.[a-z]{2})?)$/i     
+    var homepageRegex = /^((ft|htt)p:\/\/)?(www\.)?([a-z\d]+[_\-\.]?){1,2}(\.[a-z]{2,3}){1,2}$/ig
     if(!homepageRegex.test(field.value)){
       alert("Please enter a valid homepage url");
       return false;
