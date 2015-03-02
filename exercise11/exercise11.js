@@ -1,21 +1,21 @@
-function FormOperation(form){
-  this.currform = form;
+function FormHandler(form){
+  this.form = form;
   that = this;
 }
 
-FormOperation.prototype = {
+FormHandler.prototype = {
   addEventHandlers: function(){
     var that = this;
-    this.currform.addEventListener('submit', function() {
+    this.form.addEventListener('submit', function() {
       event.preventDefault();
-      var input = that.currform['number'].value;
+      var input = that.form['number'].value;
 
       if(/^\d+$/.test(input.trim())){
-        that.currform['result'].value = "true";
-        that.currform.submit();
+        that.form['result'].value = "true";
+        that.form.submit();
       }
       else{
-        that.currform['result'].value = "false";
+        that.form['result'].value = "false";
       }
     });
   }
@@ -23,6 +23,6 @@ FormOperation.prototype = {
 
 document.addEventListener('DOMContentLoaded', function(){
   var form = document.getElementById('myForm');
-  var formOps = new FormOperation(form);
-  formOps.addEventHandlers();
+  var formHandler = new FormHandler(form);
+  formHandler.addEventHandlers();
 });
