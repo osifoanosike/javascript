@@ -10,35 +10,41 @@ FormHandler.prototype = {
 
       if(currentField.matches('.input-field')) {
         // check for empty or null strings and only change returnVal if result if false
-        result = this.validateFieldContent(currentField);
+        result = this.validateFields(currentField);
         returnVal = (result == false) ? result : returnVal;
       }
     }
     return returnVal;
   },
 
-  validateFieldContent: function(currentField){
-    var result = null;
-    if(!currentField.value.trim()) {
-      alert(currentField.name + ' can\'t be empty');
-      result = false;  
-    } else if(currentField.id == "notifCheck"){
+  validateFields: function(currentField){
+    var result = null;  
+    result = this.validateFieldInput(currentField)
+    
+    //censure notification is clicked
+    if(currentField.id == "notifCheck"){
           result = this.validateNotificationCheck(currentField);
-    } else {
-      //since there's value inside the field, now check if its a valid value
-      switch(currentField.id){
-        case "about_me":
-          result = this.validateFieldLength(currentField);
-          break;      
-        case "email": 
-          result = this.validateEmail(currentField);
-          break;
-        case "home_page": 
-          result = this.validateHomepageUrl(currentField);
-          break;
-      }
+    }
+
+    switch(currentField.id){
+      case "about_me":
+        result = this.validateFieldLength(currentField);
+        break;      
+      case "email": 
+        result = this.validateEmail(currentField);
+        break;
+      case "home_page": 
+        result = this.validateHomepageUrl(currentField);
+        break;
     }
     return result;
+  },
+
+  validateFieldInput: function(currentField){
+     if(!currentField.value.trim()) {
+      alert(currentField.name + ' can\'t be empty');
+      return false;  
+    }
   },
 
   validateFieldLength: function(field) {
@@ -75,7 +81,7 @@ FormHandler.prototype = {
   addEventHandlers: function(){
     var that = this;
 
-    that.form.addEventListener('submit', function(e) {
+    this.form.addEventListener('submit', function(e) {
       e.preventDefault();
       var result = that.validateForm(this);
       if(result){
