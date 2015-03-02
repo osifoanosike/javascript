@@ -63,7 +63,7 @@ FormHandler.prototype = {
   },
 
   validateHomepageUrl: function(field) {
-    var homepageRegex = /^((ft|htt)p:\/\/)?(www\.)?([a-z\d]+[_\-\.]?){1,2}(\.[a-z]{2,3}){1,2}$/ig
+    var homepageRegex = /^((ft|htt)p:\/\/)?(www\.)?(([a-z\d]+[_\-]?)+\.)?(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})$/ig
     if(!homepageRegex.test(field.value)){
       alert("Please enter a valid homepage url");
       return false;
