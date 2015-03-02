@@ -13,7 +13,7 @@ CheckboxOp.prototype = {
         checkbox = checkBoxes[i]
         checkbox.checked = false;  
       }
-
+      that.selectedDays = [];
   },
 
   checkItem: function(currentCheckbox){
@@ -45,8 +45,7 @@ CheckboxOp.prototype = {
     this.noneAction.addEventListener('click', function() {
       var checkBoxes = that.checkboxGroup.querySelectorAll('input[type=checkbox]'), checkbox;
       that.uncheckAll(checkBoxes);
-      this.checked = true;
-      that.selectedDays = [];
+      this.checked = true;  
     });
 
     //delegating all checks to the enclosing section element
