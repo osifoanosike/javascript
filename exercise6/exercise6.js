@@ -1,4 +1,4 @@
-function FormHandler(form, notificationCheck){
+function FormHandler(form){
   this.form = form;
 }
 
@@ -10,7 +10,7 @@ FormHandler.prototype = {
 
        if(currentField.matches('.input-field')) {
         // check for empty or null strings and only change returnVal if result if false
-        result = this.validateFieldContent(currentField);
+        result = this.validateFields(currentField);
         returnVal = (result == false) ? result : returnVal;
       }
       
@@ -18,17 +18,28 @@ FormHandler.prototype = {
     return returnVal;
   },
 
-  validateFieldContent: function(field){
+  validateFields: function(field){
     var result = null;
+    console.log(field.id);
+    
+    result = this.validateFieldInput(field)
+
+    if(field.id == "about_me") {
+      result = this.validateFieldLength(field);
+    }
+
+    if (field.id == "notifCheck"){
+      result = this.validateNotificationCheck(field);
+    }
+
+    return result;
+  },
+
+  validateFieldInput: function(field) {
     if(!field.value.trim()) {
       alert(field.name + ' can\'t be empty');
-      result = false;  
-    } else if(field.id == "about_me") {
-      result = this.validateFieldLength(field);
-    } else if (field.id == "notifCheck"){
-      result = this.validateNotificationCheck(field);
-    } 
-    return result;
+      return false;  
+    }
   },
 
   validateFieldLength: function(field) {
@@ -50,8 +61,7 @@ FormHandler.prototype = {
 
     that.form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var result = that.validateForm(this);
-      if(result){
+      if(that.validateForm(this)){
         this.submit();
       }
     });
@@ -60,8 +70,7 @@ FormHandler.prototype = {
 
 document.addEventListener('DOMContentLoaded', function(){
   var form = document.getElementById('regForm');
-  var notifCheckbox = document.getElementById('notifCheck');
-  var formHandler = new FormHandler(form, notifCheckbox);
+  var formHandler = new FormHandler(form);
 
   formHandler.addEventHandlers();
 });
