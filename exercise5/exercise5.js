@@ -42,6 +42,33 @@ Table.prototype = {
     return nameLabel;
   },
 
+  performSave: function(rowID, saveButton){
+    var currentRowCount = rowID.split('_')[1];
+
+    //get the tr to be manipulated
+    var currentRow = document.body.querySelector('tr#' + rowID);
+
+    //the values in the input fields into a label for a later use.
+    var nameField = currentRow.querySelector('td input.name.' + rowID);
+    var emailField = currentRow.querySelector('td input.email.' + rowID);  
+    
+    if (this.isValidInput(nameField.value, emailField.value)) {
+
+      //create a label and set the stored values as the text prop
+      nameField.parentNode.replaceChild(this.createNameLabel(currentRowCount, nameField.value), nameField);
+      emailField.parentNode.replaceChild(this.createEmailLabel(currentRowCount, emailField.value), emailField);
+        
+      //create a fregment to hold edit and delete links...before insertion to DOM
+      var actionsFragment = document.createDocumentFragment();
+      actionsFragment.appendChild(this.createEditLink(currentRowCount));
+      actionsFragment.appendChild(document.createTextNode(' | '));
+      actionsFragment.appendChild(this.createDeleteLink(currentRowCount));
+      saveButton.parentNode.replaceChild(actionsFragment, saveButton);
+    } else {
+       alert("Please ensure both fields have valid input");
+    } 
+  },
+
   createSaveButton: function(count) {
     var saveField = document.createElement('input');
     var that = this;
@@ -51,35 +78,35 @@ Table.prototype = {
 
     saveField.addEventListener('click', function() {
       var rowID = this.classList[1];
-      var currentRowCount = rowID.split('_')[1];
-
-      //get the tr to be manipulated
-      var currentRow = document.body.querySelector('tr#' + rowID);
-
-      //the values in the input fields into a label for a later use.
-      var nameField = currentRow.querySelector('td input.name.' + rowID);
-      var emailField = currentRow.querySelector('td input.email.' + rowID);
-      
-      
-      if (that.isValidInput(nameField.value, emailField.value)) {
-
-        //create a label and set the stored values as the text prop
-        nameField.parentNode.replaceChild(that.createNameLabel(currentRowCount, nameField.value), nameField);
-        emailField.parentNode.replaceChild(that.createEmailLabel(currentRowCount, emailField.value), emailField);
-        
-        //create a fregment to hold edit and delete links...before insertion to DOM
-        var actionsFragment = document.createDocumentFragment();
-        actionsFragment.appendChild(that.createEditLink(currentRowCount));
-        actionsFragment.appendChild(document.createTextNode(' | '));
-        actionsFragment.appendChild(that.createDeleteLink(currentRowCount));
-        this.parentNode.replaceChild(actionsFragment, this);
-
-      } else {
-        alert("Please ensure both fields have valid input");
-      } 
+      that.performSave(rowID, this)
     });
 
     return saveField;
+  },
+
+  performEdit: function(rowID) {
+    var currentRowCount = rowID.split('_')[1];    
+    var currentRow = document.body.querySelector('tr#' + rowID);
+
+    // store the label values, for editing purpose
+    var nameValue = currentRow.querySelector('td label.name.' + rowID).innerHTML;
+    var emailValue = currentRow.querySelector('td label.email.' + rowID).innerHTML;
+      
+    //create input fields and set their values to the stored labels values
+    var nameField = this.createNameField(currentRowCount);
+    var emailField = this.createEmailField(currentRowCount);
+    nameField.setAttribute('value', nameValue);
+    emailField.setAttribute('value', emailValue);
+
+    //replace labels with input fields
+    currentRow.cells[0].replaceChild(nameField, currentRow.cells[0].firstChild);
+    currentRow.cells[1].replaceChild(emailField, currentRow.cells[1].firstChild);
+
+    //remove all the children elements and replace with save button
+    while (currentRow.cells[2].firstChild) {
+      currentRow.cells[2].removeChild(currentRow.cells[2].firstChild);
+    }
+    currentRow.cells[2].appendChild(this.createSaveButton(currentRowCount));
   },
 
   createEditLink: function(count){
@@ -90,32 +117,10 @@ Table.prototype = {
 
 
     editLink.addEventListener('click', function(){
-
+      
       //use the current rowCount id to maintain target during row manipulation
       var rowID = this.classList[1];
-      var currentRowCount = rowID.split('_')[1];
-     
-      var currentRow = document.body.querySelector('tr#' + rowID);
-
-      // store the values in the labels, for editinh purpose
-      var nameValue = currentRow.querySelector('td label.name.' + rowID).innerHTML;
-      var emailValue = currentRow.querySelector('td label.email.' + rowID).innerHTML;
-      
-      //create input fields and set their values to the stored labels values
-      var nameField = that.createNameField(currentRowCount);
-      var emailField = that.createEmailField(currentRowCount);
-      nameField.setAttribute('value', nameValue);
-      emailField.setAttribute('value', emailValue);
-
-      //replace labels with input fields
-      currentRow.cells[0].replaceChild(nameField, currentRow.cells[0].firstChild);
-      currentRow.cells[1].replaceChild(emailField, currentRow.cells[1].firstChild);
-
-      //remove all the children elements and replace with save button
-      while (currentRow.cells[2].firstChild) {
-        currentRow.cells[2].removeChild(currentRow.cells[2].firstChild);
-      }
-      currentRow.cells[2].appendChild(that.createSaveButton(currentRowCount));
+      that.performEdit(rowID);
     });
     
     return editLink
