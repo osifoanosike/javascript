@@ -21,12 +21,10 @@ FormHandler.prototype = {
     var result = null;  
     result = this.validateFieldInput(currentField)
     
-    //censure notification is clicked
-    if(currentField.id == "notifCheck"){
-          result = this.validateNotificationCheck(currentField);
-    }
-
     switch(currentField.id){
+      case "notifCheck":
+        result = this.validateNotificationCheck(currentField);
+        break; 
       case "about_me":
         result = this.validateFieldLength(currentField);
         break;      
@@ -55,7 +53,7 @@ FormHandler.prototype = {
   },
 
   validateEmail: function(field) {
-    var emailRegex = /^([A-Za-z0-9_\-\.]){1,}\@([A-Za-z0-9_\-\.]){1,}\.([A-Za-z]{2,4})$/;
+    var emailRegex = /^([a-z][a-z0-9_\-\.])*\@([a-z0-9_\-\.]){1,}\.([a-z]{2,4})$/i;
         
     if(!emailRegex.test(field.value)){
       alert("Please enter a valid email address");

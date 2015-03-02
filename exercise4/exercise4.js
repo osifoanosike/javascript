@@ -16,7 +16,6 @@ CheckBoxOperation.prototype = {
     var inner_chkbox = document.createElement('input');
     inner_chkbox.setAttribute('type', 'checkbox');
     inner_chkbox.setAttribute('id', parent_item + '_' + current_item);
-    inner_chkbox.setAttribute('checked','true');
 
     //create labels for checkbox
     var inner_label = document.createElement('label');
@@ -47,22 +46,27 @@ CheckBoxOperation.prototype = {
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
     this.clearState(child_list);
     child_list.setAttribute('hidden', 'true');
+    this.unselectChldItems(child_list);
   },
 
   showChildList: function (active_item){
-    var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    this.reselectChldItems(child_list);
-    child_list.removeAttribute('hidden');//makes the list visible;
+    //checks so i dont have to create a new sublist everytime
+    if(this.hasChild(active_item)) {
+      this.showExistinghildList(active_item);
+    } else {
+      this.showNewChildList(active_item);
+    }        
+    active_item.lastElementChild.scrollIntoView(true);//srolls into view...just incase
   },
 
   hasChild: function(active_item){ 
     return (active_item.childElementCount > 1);
   },
 
-  reselectChldItems: function(childList) {
+  unselectChldItems: function(childList) {
     var childItems = childList.querySelectorAll('input[type=checkbox]')
     for(i = childItems.length; i--;) {
-      childItems[i].checked = true;
+      childItems[i].checked = false;
     }
   },
 
@@ -73,7 +77,8 @@ CheckBoxOperation.prototype = {
     }
   },
 
-  new_childList: function(active_item) {
+  showNewChildList: function(active_item) {
+
     switch(active_item.id) {
       case 'color':
         this.createChildList(active_item.id, this.colorChildList);
@@ -88,14 +93,11 @@ CheckBoxOperation.prototype = {
         this.createChildList(active_item.id, this.bikesChildList);
         break;
     }
-
-    new_childList = this.displayChildList(active_item);
   },
 
-  displayChildList: function(active_item){
+  showExistinghildList: function(active_item){
     console.log(active_item);
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
-    this.reselectChldItems(child_list);
     child_list.removeAttribute('hidden');//makes the list visible;
   },
 
@@ -107,10 +109,7 @@ CheckBoxOperation.prototype = {
       if(currentCheckbox.matches('.parentCheckbox')){
         var active_list = document.body.querySelector('li#' + currentCheckbox.id);
         if (currentCheckbox.checked == true) {
-          //checks so i dont have to create a new sublist everytime
-          that.new_childList(active_list);
-          active_list.lastElementChild.scrollIntoView(true);//srolls into view...just incase
-            
+          that.showChildList(active_list);
         } else {
           that.hideChildList(active_list);
         }       
