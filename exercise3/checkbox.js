@@ -1,5 +1,6 @@
-function CheckboxOp(checkboxGroup, none_checkbox){
+function CheckboxOp(checkboxGroup, checkBoxes, none_checkbox){
   this.checkboxGroup = checkboxGroup;
+  this.checkBoxes = checkBoxes
   this.noneAction = none_checkbox;
   this.selectedDays = [];
 
@@ -57,8 +58,7 @@ CheckboxOp.prototype = {
 
     this.noneAction.addEventListener('click', function() {
       if (this.checked == true) {
-        console.log(that.checkboxGroup);
-        var checkBoxes = document.getElementsByName('checkbox');
+        var checkBoxes = that.checkBoxes
         that.uncheckAll(checkBoxes);
         this.checked = true;  
       }   
@@ -75,7 +75,8 @@ CheckboxOp.prototype = {
 document.addEventListener('DOMContentLoaded', function() {
   var checkboxGroup = document.getElementById('checkbox-group');
   var noneAction = document.getElementById('none');
-  var chkboxOps = new CheckboxOp(checkboxGroup, noneAction);
+  var checkBoxes = document.getElementsByName('checkbox');
+  var chkboxOps = new CheckboxOp(checkboxGroup,checkBoxes, noneAction);
   chkboxOps.addEventListeners();
   chkboxOps.intialize()
 });

@@ -4,24 +4,27 @@ function FormHandler(form){
 
 FormHandler.prototype = {
   validateForm: function(form_param){
-    var returnVal = true, i;
-    for(i = 0; i < form_param.elements.length; i++ ) {
+    var returnVal = true, i = 0;
+    
+    for(i = 0; i < form_param.elements.length; ) {
       var currentField = form_param.elements[i], result;
-
-       if(currentField.matches('.input-field')) {
-        // check for empty or null strings and only change returnVal if result if false
-        result = this.validateFields(currentField);
-        returnVal = (result == false) ? result : returnVal;
+      if(currentField.matches('.input-field')) {
+       // check for empty or null strings and only change returnVal if result if false
+       result = this.validateFields(currentField);
+       returnVal = (result == false) ? result : returnVal;
       }
-      
+
+      if(returnVal) { 
+        i++ ;
+      } else {
+        break;
+      } 
     }
     return returnVal;
   },
 
   validateFields: function(field){
-    var result = null;
-    console.log(field.id);
-    
+    var result = null;    
     result = this.validateFieldInput(field)
 
     if(field.id == "about_me") {
