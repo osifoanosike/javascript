@@ -6,7 +6,7 @@ DomainMatcher.prototype = {
   extractValues: function(){
     event.preventDefault();
     var urlText = this.urlForm['urlText'].value;
-    var regex = /((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
+    var regex = /^((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
     var result = regex.exec(urlText);
 
     if(regex.test(urlText)) {
