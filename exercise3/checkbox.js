@@ -43,7 +43,7 @@ CheckboxOp.prototype = {
     var that = this;
 
     this.noneAction.addEventListener('click', function() {
-      var checkBoxes = that.checkboxGroup.querySelectorAll('input[type=checkbox]'), checkbox;
+      var checkBoxes = that.checkboxGroup.querySelectorAll('input[type=checkbox]');
       that.uncheckAll(checkBoxes);
       this.checked = true;  
     });
