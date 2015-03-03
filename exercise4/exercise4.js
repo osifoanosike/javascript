@@ -1,9 +1,7 @@
 function CheckBoxOperation(checkboxWrapper){
   this.checkboxWrapper = checkboxWrapper;
-  this.colorChildList  = ['red', 'yellow', 'green', 'blue'];
-  this.drinksChildList = ['coke', 'pepsi', 'dew'];
-  this.bikesChildList = ['V-rod', 'pulsar', 'cbz'];
-  this.moviesChildList = ['Dar', 'Sir'];
+  this.childList = { color: ['red', 'yellow', 'green', 'blue'], drinks: ['coke', 'pepsi', 'dew'], 
+    bikes: ['V-rod', 'pulsar', 'cbz'], movies: ['Dar', 'Sir'] }
 }
 
 CheckBoxOperation.prototype = {
@@ -42,8 +40,8 @@ CheckBoxOperation.prototype = {
     active_list.appendChild(ul);
   },
 
-  hideChildList: function (active_item){
-    var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
+  hideChildList: function (inactive_item){
+    var child_list = inactive_item.querySelector('li#' + inactive_item.id + '>ul');
     this.clearState(child_list);
     child_list.setAttribute('hidden', 'true');
     this.unselectChldItems(child_list);
@@ -78,25 +76,10 @@ CheckBoxOperation.prototype = {
   },
 
   showNewChildList: function(active_item) {
-
-    switch(active_item.id) {
-      case 'color':
-        this.createChildList(active_item.id, this.colorChildList);
-        break;
-      case 'drinks':
-        this.createChildList(active_item.id, this.drinksChildList);
-        break;
-      case 'movies':
-        this.createChildList(active_item.id, this.moviesChildList);
-        break;
-      case 'bikes':
-        this.createChildList(active_item.id, this.bikesChildList);
-        break;
-    }
+    this.createChildList(active_item.id, this.childList[active_item.id]);
   },
 
   showExistinghildList: function(active_item){
-    console.log(active_item);
     var child_list = active_item.querySelector('li#' + active_item.id + '>ul');
     child_list.removeAttribute('hidden');//makes the list visible;
   },
@@ -116,7 +99,6 @@ CheckBoxOperation.prototype = {
       }
     });//optimization by event delegation
   }
-
 }
 
 document.addEventListener('DOMContentLoaded', function() {
