@@ -10,7 +10,7 @@ DomainMatcher.prototype = {
       var regex = /((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
          var result = regex.exec(urlText);
       if(regex.test(urlText)) {
-        if(result[4] != undefined) {
+        if(result[4].length > 0) {
           alert('Domain: ' +  result[8] + '\nSubdomain: ' +  result[4].slice(0,-1));//removes the trailing dot
         }
         else {
@@ -35,5 +35,4 @@ document.addEventListener('DOMContentLoaded', function(){
   var form = document.getElementById('urlForm');
   var matcher = new DomainMatcher(form);
   matcher.addEventHandlers();
-
 });
