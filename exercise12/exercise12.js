@@ -4,26 +4,22 @@ function DomainMatcher(form){
 
 DomainMatcher.prototype = {
   extractValues: function(){
-      event.preventDefault();
-      var urlText = that.urlForm['urlText'].value;
+    event.preventDefault();
+    var urlText = that.urlForm['urlText'].value;
+    var regex = /((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
+    var result = regex.exec(urlText);
 
-      var regex = /((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
-         var result = regex.exec(urlText);
-      if(regex.test(urlText)) {
-        if(result[4].length > 0) {
-          alert('Domain: ' +  result[8] + '\nSubdomain: ' +  result[4].slice(0,-1));//removes the trailing dot
-        }
-        else {
-          alert('Domain: ' +  result[8]);
-        }
+    if(regex.test(urlText)) {
+      if(result[4].length > 0) {
+        alert('Domain: ' +  result[8] + '\nSubdomain: ' +  result[4].slice(0,-1));//removes the trailing dot
       }
-      else{
-        alert('The URL you entered is invalid');
-      }
+      else { alert('Domain: ' +  result[8]); }
+    }
+    else{ alert('The URL you entered is invalid'); }
   },
 
   addEventHandlers: function(){
-    that = this;
+    var that = this;
     that.urlForm.addEventListener('submit', function(){
       event.preventDefault();
       that.extractValues();
