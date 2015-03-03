@@ -7,14 +7,14 @@ DomainMatcher.prototype = {
       event.preventDefault();
       var urlText = that.urlForm['urlText'].value;
 
-      var regex = /^((ft|htt)p:\/\/)?(www\.)?(([a-z\d]+[_\-]?)+\.)?(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})$/;
+      var regex = /((ft|htt)p:\/\/)?(www\.)?((([a-z\d]+[_\-]?)+\.)*)(([a-z\d]+[_\-]?)+(\.[a-z]{2,3}){1,2})/;
          var result = regex.exec(urlText);
       if(regex.test(urlText)) {
-        if(result[5] != undefined) {
-          alert('Domain: ' +  result[6] + '\nSubdomain: ' +  result[5]);//removes the trailing dot
+        if(result[4] != undefined) {
+          alert('Domain: ' +  result[8] + '\nSubdomain: ' +  result[4].slice(0,-1));//removes the trailing dot
         }
         else {
-          alert('Domain: ' +  result[6]);
+          alert('Domain: ' +  result[8]);
         }
       }
       else{
