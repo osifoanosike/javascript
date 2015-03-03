@@ -3,8 +3,7 @@ function Table(addRowButton){
   this.addRowButton = addRowButton;
   this.saveBtns = document.querySelectorAll('input.save');;//initialize the save buttons 
   this.table = document.getElementById('tableX');
-  this.newRowbtn = document.querySelector('button#new_row_btn');
-  
+  this.newRowbtn = document.querySelector('button#new_row_btn'); 
   this.tbody = document.createElement('tbody');
   this.table.appendChild(this.tbody);
 }
@@ -15,7 +14,6 @@ Table.prototype = {
     nameField.setAttribute('type', 'text');
     nameField.setAttribute('placeholder', 'Enter name');
     nameField.setAttribute('class', 'name row_' + count);
-
     return nameField;
   },
 
@@ -70,8 +68,7 @@ Table.prototype = {
   },
 
   createSaveButton: function(count) {
-    var saveField = document.createElement('input');
-    var that = this;
+    var saveField = document.createElement('input'),that = this;
     saveField.setAttribute('type', 'submit');
     saveField.setAttribute('value', 'Save');
     saveField.setAttribute('class', 'save row_' + count );
@@ -129,10 +126,6 @@ Table.prototype = {
   createDeleteLink: function(count) {
     var deleteLink = document.createElement('a'), that = this;
     deleteLink.setAttribute('href', '#');
-
-    /**count -1 because the count ws incremented after row was 
-    initialiiy created, since the delete/edit are created after, 
-    i need to -1 to get to the actual index*/
     deleteLink.setAttribute('class', 'delete row_' + count );
     deleteLink.appendChild(document.createTextNode('Delete'));
 
@@ -156,24 +149,26 @@ Table.prototype = {
     return true;
   },
 
+  createRow: function() {
+    var activeRow = this.tbody.insertRow(0);//this adds a new row
+    activeRow.setAttribute('id', 'row_' + this.rowCount);
+    activeRow.insertCell(0);
+    activeRow.cells[0].appendChild(this.createNameField(this.rowCount));
+
+    activeRow.insertCell(1);
+    activeRow.cells[1].appendChild(this.createEmailField(this.rowCount));
+
+    activeRow.insertCell(2);
+    activeRow.cells[2].appendChild(this.createSaveButton(this.rowCount));
+
+    this.tbody.appendChild(activeRow); 
+    this.rowCount++;
+  },
+
   addEventHandlers: function() {
     var that = this;
-    this.addRowButton.addEventListener('click', function(){
-    
-      var activeRow = that.tbody.insertRow(0);//this adds a new row
-      activeRow.setAttribute('id', 'row_' + that.rowCount);
-      activeRow.insertCell(0);
-      activeRow.cells[0].appendChild(that.createNameField(that.rowCount));
-
-      activeRow.insertCell(1);
-      activeRow.cells[1].appendChild(that.createEmailField(that.rowCount));
-
-      activeRow.insertCell(2);
-      activeRow.cells[2].appendChild(that.createSaveButton(that.rowCount));
-
-      console.log(activeRow);
-      that.tbody.appendChild(activeRow); 
-      that.rowCount++;
+    this.addRowButton.addEventListener('click', function() {
+      that.createRow();
     });
   }
 }
