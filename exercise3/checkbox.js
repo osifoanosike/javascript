@@ -8,6 +8,10 @@ function CheckboxOp(checkboxGroup, none_checkbox){
 
 CheckboxOp.prototype = {
 
+  intialize: function() {
+    this.noneAction.checked = true;
+  },
+
   uncheckAll: function(checkBoxes) {
      for( i = checkBoxes.length; i--; ) {
         checkbox = checkBoxes[i]
@@ -52,9 +56,12 @@ CheckboxOp.prototype = {
     var that = this;
 
     this.noneAction.addEventListener('click', function() {
-      var checkBoxes = that.checkboxGroup.getElementsByName('checkbox');
-      that.uncheckAll(checkBoxes);
-      this.checked = true;  
+      if (this.checked == true) {
+        console.log(that.checkboxGroup);
+        var checkBoxes = document.getElementsByName('checkbox');
+        that.uncheckAll(checkBoxes);
+        this.checked = true;  
+      }   
     });
 
     //delegating all checks to the enclosing section element
@@ -70,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var noneAction = document.getElementById('none');
   var chkboxOps = new CheckboxOp(checkboxGroup, noneAction);
   chkboxOps.addEventListeners();
+  chkboxOps.intialize()
 });
 
 
