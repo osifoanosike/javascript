@@ -8,11 +8,11 @@ function CheckboxOp(checkboxGroup, none_checkbox, checkLimit){
 
 CheckboxOp.prototype = {
 
-  intialize: function() {
+  setup: function() {
     this.noneAction.checked = true;
   },
 
-  uncheckAll: function() {
+  uncheckItems: function() {
     var checkedItems = this.checkboxGroup.querySelectorAll('.selected');
     for( i = checkedItems.length; i--; ) {
       checkedItems[i].checked = false; 
@@ -47,7 +47,7 @@ CheckboxOp.prototype = {
 
     this.noneAction.addEventListener('click', function() {
       if (this.checked) {
-        that.uncheckAll();
+        that.uncheckItems();
         this.checked = true;  
       }   
     });
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var noneAction = document.getElementById('none');
   var chkboxOps = new CheckboxOp(checkboxGroup, noneAction, 3);
   chkboxOps.addEventListeners();
-  chkboxOps.intialize()
+  chkboxOps.setup()
 });
 
 
