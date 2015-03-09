@@ -1,15 +1,15 @@
-function CheckboxOp(checkboxGroup, none_checkbox, checkLimit){
+function CheckboxHandler(checkboxGroup, none_checkbox, checkLimit){
   this.checkboxGroup = checkboxGroup;
-  this.noneAction = none_checkbox;
+  this.none_checkbox = none_checkbox;
   this.selectedDays = [];
   this.checkCountLimit = checkLimit;
 }
 
 
-CheckboxOp.prototype = {
+CheckboxHandler.prototype = {
 
   setup: function() {
-    this.noneAction.checked = true;
+    this.none_checkbox.checked = true;
   },
 
   uncheckItems: function() {
@@ -22,15 +22,17 @@ CheckboxOp.prototype = {
   },
 
   checkItem: function(currentCheckbox){
-    this.noneAction.checked = false;
-
-    if(this.selectedDays.length < this.checkCountLimit && currentCheckbox.checked){         
-        this.selectedDays.push(currentCheckbox.id);
-        currentCheckbox.setAttribute('class', 'selected');
-    } else if(currentCheckbox.checked  && (this.selectedDays.length >= this.checkCountLimit)) {          
-      this.promptLimitReached();
-      currentCheckbox.checked = false;
-    } else if(!currentCheckbox.checked){
+    this.none_checkbox.checked = false;
+    if(currentCheckbox.checked){
+      if(this.selectedDays.length < this.checkCountLimit){         
+          this.selectedDays.push(currentCheckbox.id);
+          currentCheckbox.setAttribute('class', 'selected');
+      } else if(this.selectedDays.length >= this.checkCountLimit) {          
+        this.promptLimitReached();
+        currentCheckbox.checked = false;
+      }
+    }
+    else {
       currentCheckbox.removeAttribute('class');
       this.selectedDays.splice(this.selectedDays.indexOf(currentCheckbox.id), 1);
     }
@@ -45,7 +47,7 @@ CheckboxOp.prototype = {
   addEventListeners: function() {
     var that = this;
 
-    this.noneAction.addEventListener('click', function() {
+    this.none_checkbox.addEventListener('click', function() {
       if (this.checked) {
         that.uncheckItems();
         this.checked = true;  
@@ -63,8 +65,8 @@ CheckboxOp.prototype = {
 
 document.addEventListener('DOMContentLoaded', function() {
   var checkboxGroup = document.getElementById('checkbox-group');
-  var noneAction = document.getElementById('none');
-  var chkboxOps = new CheckboxOp(checkboxGroup, noneAction, 3);
+  var none_checkbox = document.getElementById('none');
+  var chkboxOps = new CheckboxHandler(checkboxGroup, none_checkbox, 3);
   chkboxOps.addEventListeners();
   chkboxOps.setup()
 });
