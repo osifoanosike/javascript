@@ -13,10 +13,9 @@ CheckboxHandler.prototype = {
   },
 
   uncheckItems: function() {
-    var checkedItems = this.checkboxGroup.querySelectorAll('input:checked');
+    var checkedItems = this.checkboxGroup.querySelectorAll(':checked');
     for( i = checkedItems.length; i--; ) {
       checkedItems[i].checked = false; 
-      checkedItems[i].removeAttribute('class'); 
     }
     this.selectedDays = [];
   },
@@ -32,7 +31,6 @@ CheckboxHandler.prototype = {
       }
     }
     else {
-      currentCheckbox.removeAttribute('class');
       this.selectedDays.splice(this.selectedDays.indexOf(currentCheckbox.id), 1);
     }
   },
