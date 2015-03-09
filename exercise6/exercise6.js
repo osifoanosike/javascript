@@ -3,60 +3,57 @@ function FormHandler(form){
 }
 
 FormHandler.prototype = {
-  validateForm: function(form_param){
-    var returnVal = true, i = 0;
+
+  validateFields: function(){
+    var fields = this.form.elements, validity = true;
     
-    for(i = 0; i < form_param.elements.length; ) {
-      var currentField = form_param.elements[i], result;
-      if(currentField.matches('.input-field')) {
-       // check for empty or null strings and only change returnVal if result if false
-       result = this.validateFields(currentField);
-       returnVal = (result == false) ? result : returnVal;
-      }
-
-      if(returnVal) { 
-        i++ ;
-      } else {
-        break;
-      } 
+    if(!this.validateFieldInput(fields['Login ID'])){
+      alert('Login ID can\'t be empty');
+      validity = false;
     }
-    return returnVal;
-  },
-
-  validateFields: function(field){
-    var result = null;    
-    result = this.validateFieldInput(field)
-
-    if(field.id == "about_me") {
-      result = this.validateFieldLength(field);
+    else if(!this.validateFieldInput(fields['Email'])){
+      alert('Email can\'t be empty');
+      validity = false;
     }
-
-    if (field.id == "notifCheck"){
-      result = this.validateNotificationCheck(field);
+    else if(!this.validateFieldInput(fields['Name'])){
+      alert('Name can\'t be empty');
+      validity = false;
     }
-
-    return result;
+    else if(!this.validateFieldInput(fields['Home page'])){
+      alert('Home page can\'t be empty');
+      validity = false;
+    }
+    else if(!this.validateFieldInput(fields['About me'])){
+      alert('About me can\'t be empty');
+      validity = false;
+    }
+    else if(!this.validateFieldLength(fields['About me'])){
+      alert('Mininum characters allowed for \' About me \' is 50');
+      validity = false;
+    }
+    else if(!this.validateNotificationCheck(fields['Confirm notifications'])){
+       alert('You\'ll need to accept notifications');
+       validity = false;
+    }
+    return validity;
   },
 
   validateFieldInput: function(field) {
     if(!field.value.trim()) {
-      alert(field.name + ' can\'t be empty');
       return false;  
-    }
+    } else { return true; }
   },
 
   validateFieldLength: function(field) {
-    if(field.value.length < 50) {
-        alert('Mininum characters allowed for \''+ field.name + '\' is 50');
+    if(field.value.length < 50) {        
         return false;
-    }
+    } else { return true; }
   },
 
   validateNotificationCheck: function(field){
-    if(!field.checked) {
-      alert('You\'ll need to accept notifications');
+    if(!field.checked) {  
       return false;
-    }
+    } else { return true; }
   },
 
   addEventHandlers: function(){
@@ -64,7 +61,7 @@ FormHandler.prototype = {
 
     that.form.addEventListener('submit', function(e) {
       e.preventDefault();
-      if(that.validateForm(this)){
+      if(that.validateFields()){
         this.submit();
       }
     });
