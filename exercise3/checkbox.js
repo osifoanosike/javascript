@@ -13,7 +13,7 @@ CheckboxHandler.prototype = {
   },
 
   uncheckItems: function() {
-    var checkedItems = this.checkboxGroup.querySelectorAll('.selected');
+    var checkedItems = this.checkboxGroup.querySelectorAll('input:checked');
     for( i = checkedItems.length; i--; ) {
       checkedItems[i].checked = false; 
       checkedItems[i].removeAttribute('class'); 
@@ -26,7 +26,6 @@ CheckboxHandler.prototype = {
     if(currentCheckbox.checked){
       if(this.selectedDays.length < this.checkCountLimit){         
           this.selectedDays.push(currentCheckbox.id);
-          currentCheckbox.setAttribute('class', 'selected');
       } else if(this.selectedDays.length >= this.checkCountLimit) {          
         this.promptLimitReached();
         currentCheckbox.checked = false;
