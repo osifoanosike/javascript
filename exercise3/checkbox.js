@@ -8,7 +8,7 @@ function Checkboxes(checkboxGroup, none_checkbox, maxCheckCount){
 
 Checkboxes.prototype = {
 
-  setup: function() {
+  init: function() {
     this.none_checkbox.checked = true;
   },
 
@@ -25,7 +25,7 @@ Checkboxes.prototype = {
     if(currentCheckbox.checked){
       if(this.selectedcheckboxes.length < this.maxCheckCount){         
           this.selectedcheckboxes.push(currentCheckbox.id);
-      } else if(this.selectedcheckboxes.length >= this.maxCheckCount) {          
+      } else {          
         this.alertOverflow();
         currentCheckbox.checked = false;
       }
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var none_checkbox = document.getElementById('none');
   var checkboxes = new Checkboxes(checkboxGroup, none_checkbox, 3);
   checkboxes.addEventListeners();
-  checkboxes.setup()
+  checkboxes.init()
 });
 
 
