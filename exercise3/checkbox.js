@@ -26,8 +26,8 @@ Checkboxes.prototype = {
       if(this.selectedcheckboxes.length < this.maxCheckCount){         
           this.selectedcheckboxes.push(currentCheckbox.id);
       } else {          
-        this.alertOverflow();
         currentCheckbox.checked = false;
+        this.alertOverflow();
       }
     }
     else {
