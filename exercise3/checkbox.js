@@ -63,9 +63,9 @@ CheckboxHandler.prototype = {
 document.addEventListener('DOMContentLoaded', function() {
   var checkboxGroup = document.getElementById('checkbox-group');
   var none_checkbox = document.getElementById('none');
-  var chkboxOps = new CheckboxHandler(checkboxGroup, none_checkbox, 3);
-  chkboxOps.addEventListeners();
-  chkboxOps.setup()
+  var checkboxHandler = new CheckboxHandler(checkboxGroup, none_checkbox, 3);
+  checkboxHandler.addEventListeners();
+  checkboxHandler.setup()
 });
 
 
