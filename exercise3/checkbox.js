@@ -1,8 +1,8 @@
-function Checkboxes(checkboxGroup, none_checkbox, checkLimit){
+function Checkboxes(checkboxGroup, none_checkbox, maxCheckCount){
   this.checkboxGroup = checkboxGroup;
   this.none_checkbox = none_checkbox;
   this.selectedcheckboxes = [];
-  this.checkCountLimit = checkLimit;
+  this.maxCheckCount = maxCheckCount;
 }
 
 
@@ -23,9 +23,9 @@ Checkboxes.prototype = {
   checkItem: function(currentCheckbox){
     this.none_checkbox.checked = false;
     if(currentCheckbox.checked){
-      if(this.selectedcheckboxes.length < this.checkCountLimit){         
+      if(this.selectedcheckboxes.length < this.maxCheckCount){         
           this.selectedcheckboxes.push(currentCheckbox.id);
-      } else if(this.selectedcheckboxes.length >= this.checkCountLimit) {          
+      } else if(this.selectedcheckboxes.length >= this.maxCheckCount) {          
         this.alertOverflow();
         currentCheckbox.checked = false;
       }
