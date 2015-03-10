@@ -6,36 +6,30 @@ FormHandler.prototype = {
   validateForm: function(form_param){
     var returnVal = true, i = 0;
     
-    for(i = 0; i < form_param.elements.length; ) {
-      var currentField = form_param.elements[i], result;
-      if(currentField.matches('.input-field')) {
-       // check for empty or null strings and only change returnVal if result if false
-       result = this.validateFields(currentField);
-       returnVal = (result == false) ? result : returnVal;
-      }
+    var simple_validation_fields = form_param.querySelectorAll('.input-field');
 
-      if(returnVal) { 
-        i++ ;
-      } else {
-        break;
-      } 
+    for(i = 0; i < simple_validation_fields.length; ) {
+      
+      // check for empty or null strings and only change returnVal if result if false
+      var result = this.validateFieldInput(simple_validation_fields[i]);
+      returnVal = (result == false) ? result : returnVal;
+
+      if(returnVal)
+        { i++;}
+      else{ break; } 
     }
+
+    if(returnVal) {
+      result = this.validateAboutMe();
+      returnVal = (result == false) ? result : returnVal;
+    }
+    
+    if(returnVal) {
+      result = this.validateNotificationCheck(form_param.elements['Confirm notifications']);
+      returnVal = (result == false) ? result : returnVal;
+    }
+    
     return returnVal;
-  },
-
-  validateFields: function(field){
-    var result = null;    
-    result = this.validateFieldInput(field)
-
-    if(field.id == "about_me") {
-      result = this.validateFieldLength(field);
-    }
-
-    if (field.id == "notifCheck"){
-      result = this.validateNotificationCheck(field);
-    }
-
-    return result;
   },
 
   validateFieldInput: function(field) {
@@ -43,6 +37,19 @@ FormHandler.prototype = {
       alert(field.name + ' can\'t be empty');
       return false;  
     }
+  },
+
+  validateAboutMe: function() {
+    var about_me_field = this.form.elements['About me'], returnVal = true;
+    
+    result = this.validateFieldInput(about_me_field)
+    returnVal = (result == false) ? result : returnVal;
+
+    if (returnVal) {
+      result = this.validateFieldLength(about_me_field);
+      returnVal = (result == false) ? result : returnVal;
+    }
+    return returnVal;
   },
 
   validateFieldLength: function(field) {
