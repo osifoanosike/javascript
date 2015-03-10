@@ -1,12 +1,12 @@
-function CheckboxHandler(checkboxGroup, none_checkbox, checkLimit){
+function Checkboxes(checkboxGroup, none_checkbox, checkLimit){
   this.checkboxGroup = checkboxGroup;
   this.none_checkbox = none_checkbox;
-  this.selectedDays = [];
+  this.selectedcheckboxes = [];
   this.checkCountLimit = checkLimit;
 }
 
 
-CheckboxHandler.prototype = {
+Checkboxes.prototype = {
 
   setup: function() {
     this.none_checkbox.checked = true;
@@ -17,28 +17,28 @@ CheckboxHandler.prototype = {
     for( i = checkedItems.length; i--; ) {
       checkedItems[i].checked = false; 
     }
-    this.selectedDays = [];
+    this.selectedcheckboxes = [];
   },
 
   checkItem: function(currentCheckbox){
     this.none_checkbox.checked = false;
     if(currentCheckbox.checked){
-      if(this.selectedDays.length < this.checkCountLimit){         
-          this.selectedDays.push(currentCheckbox.id);
-      } else if(this.selectedDays.length >= this.checkCountLimit) {          
-        this.promptLimitReached();
+      if(this.selectedcheckboxes.length < this.checkCountLimit){         
+          this.selectedcheckboxes.push(currentCheckbox.id);
+      } else if(this.selectedcheckboxes.length >= this.checkCountLimit) {          
+        this.alertOverflow();
         currentCheckbox.checked = false;
       }
     }
     else {
-      this.selectedDays.splice(this.selectedDays.indexOf(currentCheckbox.id), 1);
+      this.selectedcheckboxes.splice(this.selectedcheckboxes.indexOf(currentCheckbox.id), 1);
     }
   },
 
-  promptLimitReached: function(){
-    var lastSelected = this.selectedDays[this.selectedDays.length - 1];
+  alertOverflow: function(){
+    var lastSelected = this.selectedcheckboxes[this.selectedcheckboxes.length - 1];
     alert('Only 3 days can be selected.' + 
-      '\nYou have already selected ' + this.selectedDays.slice(0, -1).join(', ') + ' and ' + lastSelected);
+      '\nYou have already selected ' + this.selectedcheckboxes.slice(0, -1).join(', ') + ' and ' + lastSelected);
   },
 
   addEventListeners: function() {
@@ -63,9 +63,9 @@ CheckboxHandler.prototype = {
 document.addEventListener('DOMContentLoaded', function() {
   var checkboxGroup = document.getElementById('checkbox-group');
   var none_checkbox = document.getElementById('none');
-  var checkboxHandler = new CheckboxHandler(checkboxGroup, none_checkbox, 3);
-  checkboxHandler.addEventListeners();
-  checkboxHandler.setup()
+  var checkboxes = new Checkboxes(checkboxGroup, none_checkbox, 3);
+  checkboxes.addEventListeners();
+  checkboxes.setup()
 });
 
 
