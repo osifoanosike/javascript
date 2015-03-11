@@ -3,33 +3,31 @@ function FormHandler(form){
 }
 
 FormHandler.prototype = {
-  validateForm: function(form_param){
-    var returnVal = true, i = 0;
-    
-    var simple_validation_fields = form_param.querySelectorAll('.input-field');
 
-    for(i = 0; i < simple_validation_fields.length; ) {
-      
-      // check for empty or null strings and only change returnVal if result if false
+  isFormValid: function() {
+    var isValid = true;
+    var simple_validation_fields = this.form.querySelectorAll('.input-field');
+
+    for(var i = 0; i < simple_validation_fields.length; ) {
       var result = this.validateFieldInput(simple_validation_fields[i]);
-      returnVal = (result == false) ? result : returnVal;
+      isValid = (result == false) ? result : isValid;
 
-      if(returnVal)
+      if(isValid)
         { i++;}
       else{ break; } 
     }
 
-    if(returnVal) {
+    if(isValid) {
       result = this.validateAboutMe();
-      returnVal = (result == false) ? result : returnVal;
+      isValid = (result == false) ? result : isValid;
     }
     
-    if(returnVal) {
-      result = this.validateNotificationCheck(form_param.elements['Confirm notifications']);
-      returnVal = (result == false) ? result : returnVal;
+    if(isValid) {
+      result = this.validateNotificationCheck();
+      isValid = (result == false) ? result : isValid;
     }
     
-    return returnVal;
+    return isValid;
   },
 
   validateFieldInput: function(field) {
@@ -59,8 +57,8 @@ FormHandler.prototype = {
     }
   },
 
-  validateNotificationCheck: function(field){
-    if(!field.checked) {
+  validateNotificationCheck: function(){
+    if(!this.form.elements['Confirm notifications'].checked) {
       alert('You\'ll need to accept notifications');
       return false;
     }
@@ -71,7 +69,7 @@ FormHandler.prototype = {
 
     that.form.addEventListener('submit', function(e) {
       e.preventDefault();
-      if(that.validateForm(this)){
+      if(that.isFormValid()){
         this.submit();
       }
     });
