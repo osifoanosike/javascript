@@ -30,7 +30,7 @@ FormHandler.prototype = {
   },
 
   validateAboutMe: function() {
-    var about_me_field = this.form.elements['About me'];
+    var about_me_field = this.form.elements['About me'], result = false;
     
     if (this.validateFieldInput(about_me_field)) {
       result = this.validateFieldLength(about_me_field);
