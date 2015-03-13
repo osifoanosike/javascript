@@ -9,8 +9,7 @@ FormHandler.prototype = {
     var simple_validation_fields = this.form.querySelectorAll('.input-field');
 
     for(var i = 0; i < simple_validation_fields.length; ) {
-      var result = this.validateFieldInput(simple_validation_fields[i]);
-      isValid = (result == false) ? result : isValid;
+      var isValid = this.validateFieldInput(simple_validation_fields[i]);
 
       if(isValid)
         { i++;}
@@ -18,13 +17,11 @@ FormHandler.prototype = {
     }
 
     if(isValid) {
-      result = this.validateAboutMe();
-      isValid = (result == false) ? result : isValid;
+      isValid = this.validateAboutMe();
     }
     
     if(isValid) {
-      result = this.validateNotificationCheck();
-      isValid = (result == false) ? result : isValid;
+      isValid = this.validateNotificationCheck();
     }
     
     return isValid;
