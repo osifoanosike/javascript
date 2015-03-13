@@ -3,7 +3,6 @@ function FormHandler(form){
 }
 
 FormHandler.prototype = {
-
   isFormValid: function() {
     var simple_validation_fields = this.form.querySelectorAll('.input-field');
 
@@ -16,7 +15,6 @@ FormHandler.prototype = {
     }
 
     if(isValid) { isValid = this.validateAboutMe(); }
-    
     if(isValid) { isValid = this.validateNotificationCheck();  }
     
     return isValid;
