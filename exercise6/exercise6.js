@@ -5,7 +5,6 @@ function FormHandler(form){
 FormHandler.prototype = {
 
   isFormValid: function() {
-    var isValid = true;
     var simple_validation_fields = this.form.querySelectorAll('.input-field');
 
     for(var i = 0; i < simple_validation_fields.length; ) {
@@ -22,7 +21,7 @@ FormHandler.prototype = {
     
     return isValid;
   },
-
+ 
   validateFieldInput: function(field) {
     if(!field.value.trim()) {
       alert(field.name + ' can\'t be empty');
