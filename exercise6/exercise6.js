@@ -16,13 +16,9 @@ FormHandler.prototype = {
       else{ break; } 
     }
 
-    if(isValid) {
-      isValid = this.validateAboutMe();
-    }
+    if(isValid) { isValid = this.validateAboutMe(); }
     
-    if(isValid) {
-      isValid = this.validateNotificationCheck();
-    }
+    if(isValid) { isValid = this.validateNotificationCheck();  }
     
     return isValid;
   },
